@@ -1,0 +1,31 @@
+# pyontutils
+- **What it is** — pyontutils is a collection of Python utilities for maintaining ontologies in Git and making them available through SciGraph. The repository also contains related packages for deterministic Turtle serialization, NIF-Ontology workflows, SciCrunch/InterLex integration, and an OWL-backed neuron-type data model.
+- **Key concepts** —
+  - Deterministic serialization matters for ontology version control: `ttlser` imposes stable formatting and total ordering so Git diffs show meaningful ontology changes rather than triple reordering.
+  - Neuron Lang models a neuron type as a collection of phenotypes backed by OWL 2 classes. A phenotype is an object–predicate pair expressed with a CURIE or URI; shared ontology identifiers bridge different local phenotype names and support regular, rule-based neuron names.
+  - OWL modeling choices are reasoner-dependent. The documented neuron model uses classes, restrictions, intersections, phenotype subproperties, transitive `partOf`, and location-property chains, then checks query behavior with ELK and FaCT++.
+  - CURIE/qname management, ontology identifiers, RDF lists, blank nodes, restrictions, axioms, and graph comparison are treated as practical concerns in an ontology toolchain rather than only as abstract modeling topics.
+- **How you'd use it** — Install `pyontutils` from PyPI, configure its YAML files and (when needed) a SciGraph API key, then use the supplied CLIs: `ttlfmt` for deterministic Turtle, `ontutils` for common ontology operations/refactorings, `ontload` for loading a Git-managed ontology into SciGraph, `qnamefix` for qnames, `scig` for endpoint queries, `graphml_to_ttl` for yEd GraphML conversion, and `ontree` for hierarchy browsing. With `neurondm`, define `Neuron` values from `Phenotype` object–predicate pairs, search identifiers through `%scig`, manage reusable local names and phenotype contexts, and export Python or any RDFLib-supported serialization (with deterministic Turtle preferred).
+- **LLM angle** — none stated
+- **Pitfalls & lessons** —
+  - The README says pyontutils is only “slowly approaching stability,” and several workflows have substantial external requirements (including Java/Maven for `ontload`, FSL or atlas data for parcellation, and native build dependencies).
+  - `ttlser` documents unresolved determinism/correctness hazards: symmetric predicates must be known, duplicate prefixes can make prefix selection history-dependent, deterministic output depends on specific RDFLib changes, blank-node ranking can fail randomly, and the `scottl` serializer is described as broken.
+  - Neuron Lang is add-only within a running graph; removing neurons requires resetting the program, so persistent notebook state can be confusing. Use outside NIF-Ontology is possible but not fully abstracted and needs additional `Config` setup.
+  - A `hasLocationPhenotype` property-chain axiom is explicitly reported to break FaCT++, illustrating that an OWL design that works with one reasoner may fail with another.
+  - The release documentation strongly warns never to run its destructive release functions on a working repository because stashed or untracked work can be lost; it also requires tests, TestPyPI inspection, and hash verification before release.
+- **Verdict** — A broad, NIF-oriented ontology engineering toolbox whose strongest documented contributions are stable Turtle/Git workflows, SciGraph integration, and an executable OWL-backed DSL for neuron phenotypes.
+
+## Sources consulted
+- `README.md`
+- `docs/NeuronLangExample.ipynb`
+- `docs/release.org`
+- `ilxutils/README.md`
+- `librdflib/README.md`
+- `neurondm/README.md`
+- `neurondm/docs/NeuronLangExample.ipynb`
+- `neurondm/docs/basic-model.org`
+- `neurondm/docs/neurons_notebook.md`
+- `neurondm/docs/types.org`
+- `nifstd/README.md`
+- `ttlser/README.md`
+- `ttlser/docs/ttlser.md`

@@ -1,0 +1,35 @@
+{
+  "skill_name": "ontology-chat",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Compare BFO, DOLCE, and SUMO. Where do their commitments and intended uses differ?",
+      "expected_output": "A source-grounded comparison citing each ontology note and preserving scope/maturity caveats.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do OntoLearner and OntoAligner use RAG differently, and what are their limits?",
+      "expected_output": "Distinguishes ontology learning from alignment, retrieves both primary notes, and cites documented scaling, context, and validation limits.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Should I use SHACL or an OWL reasoner to validate incoming RDF data?",
+      "expected_output": "Separates constraint validation from open-world inference and labels use-case advice as a recommendation.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "What does this knowledge base say about WordNet?",
+      "expected_output": "Reports that WordNet was skipped and gives the recorded Cloudflare retrieval limitation without inventing content.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Give me a beginner-to-advanced reading path for learning ontology engineering.",
+      "expected_output": "A staged path grounded in notes for RDF, RDFS, SKOS, OWL/DL, querying, validation/reasoning, governance, tooling, alignment, and LLMs.",
+      "files": []
+    }
+  ]
+}

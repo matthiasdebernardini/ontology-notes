@@ -1,0 +1,50 @@
+# Harvest inputs and upstream working copies (not distributed)
+/repos/
+/sources/
+
+# Local agent/runtime state
+/.claude/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+
+# Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating-system metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# Build/package output
+build/
+dist/
+*.egg-info/
+
+# Deliberately tracked generated knowledge artifacts:
+#   notes/
+#   NOTE_INDEX.json
+#   SYNTHESIS.md
+
+# Local harvest orchestration and transient batching
+/goals/
+/web-batches.json
+
+# Local skill evaluation artifacts
+/.skill-eval-workspace/

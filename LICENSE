@@ -1,0 +1,7 @@
+Ontology Notes is dual-licensed by file type.
+
+Code and agent tooling in `scripts/`, `skills/`, and `tests/` are available under the MIT License in `LICENSE-MIT`.
+
+Knowledge-base content and project documentation in `notes/`, `NOTE_INDEX.json`, `SYNTHESIS.md`, `manifest.json`, `README.awesome-ontology.md`, `README.md`, and `ATTRIBUTION.md` are available under the Creative Commons Attribution 4.0 International license in `LICENSE-CC-BY-4.0`.
+
+Third-party names, quotations, linked works, and trademarks remain subject to their respective owners' rights and licenses. See `ATTRIBUTION.md`.
