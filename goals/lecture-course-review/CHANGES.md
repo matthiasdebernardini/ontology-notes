@@ -262,3 +262,120 @@ The three, all fixed by rewriting the note's opening sentence, never the generat
 The script was a throwaway and is not kept: the defect class it finds is now visible in a
 single re-run of the same twenty lines, and a permanent script would need maintaining for
 a check that fires once.
+
+## Task 3 — The ten transcripts
+
+### What was checked
+
+Every factual proposition in all ten files, against the source notes
+`lectures/COURSE-PLAN.md` lists for that lecture. Qualitative, causal and comparative
+claims were audited on the same footing as names, dates and numbers. Six of the ten
+carry a full written audit in this directory (`audit-04.md` through `audit-08.md`,
+`audit-10.md`), each with a Verified table of quoted spans, a Cut list with reasons, a
+Corrected list, and a Narration-fixes list. Lectures 1, 2, 3 and 9 were audited and
+repaired in the same pass without a separate brief.
+
+Totals across the six briefs: 242 verified claims with quoted spans, 104 cuts, 85
+corrections.
+
+### The scale of the problem, by file
+
+| Lecture | Words before | Words after | What drove the change |
+| --- | ---: | ---: | --- |
+| 04 Cyc | 2,899 | 1,748 | −40%. The worst file in the course. |
+| 05 Semantic Web | 3,005 | 2,661 | −11% |
+| 06 Machinery | 3,005 | 2,708 | −10% |
+| 07 Building one | 2,906 | 2,941 | parity; ~700 words replaced |
+| 08 Criticisms | 3,434 | 3,364 | −2% |
+| 10 Politics | 2,789 | 2,806 | parity; cut then re-spent on sourced material |
+
+**Lecture four was 40 percent invented.** Not embellished — invented. The entire
+expert-systems opening (the commercial AI market of the early 1980s, the two walls, the
+knowledge-acquisition bottleneck, the medical system reasoning about a decade-dead
+patient), the entire KL-ONE and frames history (Minsky's Restaurant frame, Bill Woods's
+1980 paper "What's in a Link?", KL-ONE's automatic classification), and the entire
+KIF/Ontolingua section trace to nothing. Greps across `notes/` return **zero** hits for
+KL-ONE, Minsky, Woods, KIF, and "Knowledge Interchange Format". The Cyc etymology
+("from the middle of 'encyclopedia'") was stated as fact with no note behind it. One
+invented item was appended to a list Lenat actually gives, and one invented property
+("stable — it doesn't change when the vendor ships a new version") to a set of three the
+note names exactly.
+
+The other named fabrications, one per file, are in the briefs. The largest single one
+outside lecture four is in lecture eight: **118 words putting an argument in Dave
+McComb's mouth that he never makes** — a drug-interaction example, a "bounded domain"
+defence, and a hundred-thousand-a-year volume claim, none of which appear in the capture
+or the note. McComb's actual reply is that Shirky's own article is a syllogism. A further
+passage then adjudicated the exchange that did not happen, and leaned on Shirky's "three
+preconditions", which do not exist either (see Task 1, correction 3).
+
+### Cross-file checks, which no per-file audit could do
+
+These were run over the whole set after the per-file repairs landed.
+
+**One seam, found and fixed.** Task 1 established that reading the standards stack as a
+set of answers to the 2001 Scientific American article is this course's reconstruction
+and not a documented chain of cause and effect, and lecture five gained an explicit
+caveat saying so. Lecture six's opening still asserted the mapping flatly: "each layer
+answers a requirement set out in the Scientific American article of two thousand and
+one." Lecture six now carries the caveat forward.
+
+**Back-references, all ten verified against the text of the lecture they cite.** Lecture
+three's summary of two matches lecture two's closing; four's "at the end of the last one
+I promised you the most expensive experiment" matches three's closing; five's
+"military-funded programme about reuse" survives lecture four's 40% cut (ARPA and the
+Knowledge Sharing Effort are both still there, now correctly attributed); seven's summary
+of four, five and six is accurate; eight's "a governance body that happens to produce a
+file" matches seven's closing; ten's summary of nine matches nine's closing. No lecture
+credits an earlier one with material it does not contain.
+
+**Endings.** Exactly one "claim to keep" per file, all ten at the end. No orphaned
+mid-file closings survive — lecture four had three of them, all cut.
+
+**Restated points.** Every sentence pair in every file was compared by four-word shingle
+overlap. Three pairs came back above the threshold; reading them, all three are
+deliberate callbacks (lecture four's closing restating its own definition, lecture six
+reusing its worked flight example, lecture eight paying off the periodic-table example).
+No splice-scars.
+
+### Narration fixes applied in this pass
+
+The per-file briefs each carry a narration list. These are the ones that only a
+whole-corpus scan finds, all now fixed:
+
+- **`W3C` written as an abbreviation** in lectures five and nine, eight occurrences.
+  Spoken aloud that is "double-u three see". Now "W three C", matching lecture one.
+- **`OWL 2` written with a digit** in lecture six, six occurrences, where lecture five
+  already writes "OWL two".
+- **Five years written as digits** in lecture eight (May 2001, 2005, 1999, November 2003,
+  2015) where every other lecture spells them out.
+- **OWL unexpanded on first use in lecture nine.** A listener starting at nine met "OWL"
+  cold.
+- **`AI` unexpanded on first use in lecture nine.** Now "artificial-intelligence agents".
+- **`PKK` unexpanded in lecture ten.** Expanded to "the P-K-K, a banned militant Kurdish
+  nationalist organisation" — the gloss is the capture's own wording
+  (`research/exa/palantir-crit.json`), not general knowledge supplied from memory.
+
+A full scan confirms zero markdown, zero headings, zero bullets, zero code fences, zero
+spoken URLs and zero remaining digits across all ten files.
+
+### No new notes were created
+
+Every claim that traced to nothing was cut rather than promoted to a note. The judgement
+in each case: the material was fabricated detail dressed as history (lecture four's
+KL-ONE and expert-systems sections, lecture eight's McComb argument), not a real gap in
+the corpus. Creating notes would have meant sourcing claims that were invented in the
+first place. The corpus count is therefore unchanged at 181 notes, and the hard-coded
+counts in `tests/` did not need updating for this task.
+
+### What could not be verified
+
+- **Lecture four's Cyc etymology.** "Cyc, from the middle of 'encyclopedia'" is very
+  probably true and is not in any note or capture. Cut rather than kept, per the rule.
+  Re-sourcing it was not attempted because it carries no weight in the argument.
+- **Lecture eight's Aaron Swartz block** (~330 words) was cut for structure rather than
+  for grounding — it is fully sourced in `notes/semantic-web-retrospective.md`. It is
+  reinstatable verbatim and `audit-08.md` says so.
+- Each brief ends with a **"Depth still available"** section listing grounded material
+  the lecture does not yet use. That is the input to Task 5, and it is evidence that the
+  cuts were not the notes running dry.

@@ -1,7 +1,7 @@
 # Criticism of Operational Ontologies (Palantir)
 
 **What it is**
-The research and legal record on what happens when a vendor ontology is installed inside a state institution. The most direct study is Galis and Karlsson's 2024 paper on POL-INTEL, the Danish police's customisation of Palantir's Gotham, based on interviews with Palantir engineers and police-officer users.
+The research and legal record on what happens when a vendor ontology is installed inside a state institution. The most direct study is Vasilis Galis and Björn Karlsson's 2024 paper, written at the IT University of Copenhagen, on POL-INTEL, the Danish police's customisation of Palantir's Gotham, based on interviews with Palantir engineers and police-officer users.
 
 **Key concepts**
 - **Ontology in two senses at once.** The authors write that "the concept of ontology should be understood in a twofold, albeit interconnected, way: it stands for its usual philosophical burden, but also refers to a centralized concept repository." They then borrow Barry Smith's terminological split between theory-focused R-ontologies and pragmatically oriented E-ontologies, and argue that "the platform's E-ontology cannot be separated from Palantir's and/or the police."

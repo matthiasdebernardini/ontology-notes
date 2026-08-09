@@ -1,109 +1,67 @@
 Lecture Four. The Cathedral: Cyc, and the Birth of the Engineering Sense.
 
-This is the fourth of ten talks about ontologies. We've done the word, its philosophical history, and Quine's move that turned ontology into a property of theories rather than a claim about reality. Today we get to computer science. We'll look at the problem the field was actually trying to solve, at the most expensive experiment it ever ran, and at the moment somebody wrote down a definition that stuck.
+This is the fourth of ten talks about ontologies. The first three did the word, its philosophical history, and Quine's move that turned ontology into a property of theories rather than a claim about reality. At the end of the last one I promised you the most expensive experiment this field has ever run. That's today, together with the moment somebody wrote down a definition that stuck.
 
-Set the scene. It's the early 1980s. Artificial intelligence has a commercial product for the first time, and it's called the expert system.
+Start with the premise, because everything else follows from it.
 
-The idea behind an expert system is simple and it worked. Take a narrow domain — diagnosing bacterial infections, configuring a mainframe order, prospecting for minerals. Interview the human experts. Write down what they know as rules: if the patient has this and this, then consider that. Feed the rules to an inference engine. The engine chains through them and produces a recommendation, and it can tell you which rules it used, which means a human can check the reasoning. For a few years this was the most convincing thing AI had ever produced, and companies bought it.
+Douglas Lenat's claim was that machine learning and natural language understanding both stall without a large base of background knowledge. Learning cannot bootstrap that base, because you need background knowledge before you can interpret the examples. Reading text cannot supply it either, because the writers leave it out.
 
-Then everyone hit the same two walls.
+So somebody has to enter it by hand. All of it. Until the system reaches what Lenat called critical mass and can take over its own learning.
 
-The first wall was the knowledge acquisition bottleneck. Getting knowledge out of experts and into rules is slow, expensive, specialist work. Every rule is hand-written by somebody who understands both the domain and the formalism, and there are never enough of those people. The system's capability scales with human labour, and human labour does not scale.
+In nineteen eighty-four, Lenat and Mary Shepherd began that project. It was called Cyc. The article to read is Lenat's "CYC: A Large-Scale Investment in Knowledge Infrastructure," published in Communications of the ACM — the A-C-M, the Association for Computing Machinery, the main professional body of the field — in nineteen ninety-five. In it Lenat says something I find genuinely admirable, and I'll quote it. Mary Shepherd and I, he writes, embarked on that task in nineteen eighty-four, "knowing we had little chance of success, but seeing no alternative but to try." That is not the sentence of a man overselling his research programme.
 
-The second wall was brittleness, and it was worse. Push an expert system one inch outside its domain and it doesn't degrade — it fails, confidently, with no sense that anything is wrong. A medical diagnosis system would happily reason about a patient who had been dead for a decade, because nothing in its rules said that dead people stop having symptoms. It knew a great deal about infection and nothing whatsoever about the world.
+What does codifying common sense require? Lenat's list is sobering. Causality. Time. Space. Substances. Intention. Contradiction. Uncertainty. Belief. Emotion. All of that has to be represented before a machine can reason about anything ordinary at all.
 
-Doug Lenat looked at that second wall and drew a conclusion that was either the great insight of the era or its great mistake, and the argument is still live.
-
-His conclusion was that the missing ingredient is common sense, and that common sense cannot be learned from the narrow domain because it's the background against which the domain makes sense. Machine learning can't bootstrap it, because you need background knowledge to interpret the examples. Natural language understanding can't extract it from text, because writers omit it — nobody writes down that dead people don't have symptoms, precisely because everyone knows.
-
-So somebody has to type it in. All of it. By hand. Until there's enough that the system can start reading for itself.
-
-In 1984, Lenat and Mary Shepherd began that project. It was called Cyc, from the middle of "encyclopedia." In his 1995 article about it, Lenat says something I find genuinely admirable, and I'll quote it: they embarked on the task "knowing we had little chance of success, but seeing no alternative but to try." That is not the sentence of a man overselling his research programme.
-
-What does codifying common sense actually require? Lenat lists it, and the list is sobering: causality, time, space, substances, intention, contradiction, uncertainty, belief, emotion, planning. Not just representing those things, but reasoning about them efficiently, and working out sets of categories and attributes that carve up the world usefully.
-
-The examples in the paper are the part people remember, and they're worth hearing because they show exactly what kind of knowledge is at stake.
+The examples in the paper are the part people remember, and they're worth hearing, because they show exactly what kind of knowledge is at stake.
 
 You cannot remember events that have not happened yet.
 
 If you cut a lump of peanut butter in half, each half is also a lump of peanut butter. But if you cut a table in half, neither half is a table.
 
-Sit with that second one, because it's doing more work than it appears to. It's the distinction between what philosophers call mass nouns and count nouns, or between homogeneous and heterogeneous substances, and it has real consequences. It determines whether "half of it" is still an instance of the type. Any system reasoning about materials, or chemicals, or fuel, or blood, needs that distinction and needs it explicitly, because it does not fall out of anything else.
+Sit with that second one. What I'm about to say about it is my reading rather than Lenat's. It is the distinction between mass nouns and count nouns, and what it decides is whether half of a thing is still an instance of the thing's type. Any system reasoning about materials, or chemicals, or fuel, or blood needs that distinction, and needs it written down, because it does not fall out of anything else.
 
-Lenat's point about these assertions is that they are unlikely to appear in any textbook, dictionary, magazine, or encyclopedia, even one written for children. They're too fundamental. Stating them aloud to another person would be confusing or insulting. Which is precisely why a machine that learns only from text will not have them.
+Lenat's own line about why counting words will not get you there is worth quoting directly. Statistics, colocation, and frequency, he writes, "do not resolve such questions. But the task goes from impossible to trivial if one already knows a few things about boxes and pens."
 
-So how big did it get? The 1995 paper reports a universal schema of general concepts, roughly a million hand-crafted commonsense axioms entered into the knowledge base, and millions more inferred and cached from those. Cyc also introduced an idea that has aged well: microtheories, which are locally consistent contexts. Rather than demanding that the entire knowledge base be consistent — which is impossible for common sense, since ordinary human beliefs contradict each other constantly — you partition it into contexts that are each internally coherent. Inside the naive-physics microtheory, heavy things fall. Inside the cartoon-physics microtheory, they hang in the air until noticed. Both can live in the same system.
+So how big did it get? The nineteen ninety-five paper reports a universal schema of roughly a hundred thousand general concepts spanning human reality, about a million commonsense axioms handcrafted for and entered into Cyc's knowledge base, and millions more inferred and cached by Cyc itself. And it reports a price: a person-century of effort since nineteen eighty-four.
 
-Now, what happened? Cyc is still going, four decades on, as a commercial product. It never reached the critical mass Lenat described, where the system reads for itself and the hand-entry stops. The bootstrapping moment stayed in the future.
+Hold that number, because it is the only one of its kind. This is the only document I know of that states the price of hand-codified knowledge as a figure. Every plan that says "we'll just model our domain properly" is quietly betting against it.
 
-And I want to draw the engineering lesson carefully, because it's easy to be glib about a project that ran for forty years.
+Cyc also introduced an idea that has aged well. Micro-theories. Each one, in the paper's own words, "inhabits its own context," and each is "relatively small, solid, and flat." Now, the reason I think that matters is mine and not the paper's, so take it as my inference. Demanding that one enormous knowledge base be consistent from end to end is a losing requirement. Small, flat, locally coherent contexts are a way of not asking for it.
 
-The lesson isn't that the effort was wasted, and it isn't that hand-built knowledge is worthless. The lesson is about the shape of the bet. Cyc's value was structured to arrive at a threshold. Below the threshold, you have an incomplete encyclopedia. Above it, you have a system that learns. Everything depended on crossing a line whose location nobody could measure in advance.
+What happened to the project? Cyc is still going, and it is sold today as a commercial platform — machine reasoning built on codified human common sense rather than on patterns and statistics, pitched at operational work in healthcare, and pitched hard on explainability and auditability. What it never reached is the critical mass Lenat described, where the hand entry stops and the system reads for itself. The payoff was always deferred to a threshold that had not yet arrived.
 
-Compare that to how the successful ontologies in this field are built. The Gene Ontology was useful when it had a few thousand terms, because biologists could annotate genes with it and compare results across species that day. Every increment paid off immediately. The Financial Industry Business Ontology, CIDOC CRM for museums, the Digital Buildings ontology — all of them deliver value continuously rather than at a threshold. When you design a knowledge project, ask which shape it has. If the answer is "it'll be great once we've modelled everything," you have a Cyc, and you should know that going in.
+And I want to draw the engineering lesson carefully, because it's easy to be glib about a project that has run for forty years.
+
+The lesson is not that the effort was wasted, and it is not that hand-built knowledge is worthless. The lesson is about the shape of the bet. A knowledge base whose value depends on reaching a threshold, rather than on being useful at every stage, is a bet on the threshold. The alternative shape is layered: a small ontology that answers real competency questions early, and keeps answering more of them as it grows. When you plan a knowledge project, ask which of those two shapes it has. If the answer is "it'll be great once we've modelled everything," you have a Cyc, and you should know that going in.
 
 Now, the second half of this lecture, and the reason the word we're studying entered computer science at all.
 
-While Cyc was grinding away, a different problem was becoming obvious across the whole field. Lots of groups were building knowledge-based systems. Every one of them was building its knowledge base from scratch. And none of the knowledge bases could talk to each other, because each had invented its own vocabulary, its own way of representing time, its own conventions for what counted as an entity.
+Tom Gruber's nineteen ninety-three work gave us the definition: an ontology is an explicit specification of a conceptualization. We took that apart in lecture one, so I'll only restate what matters here — and what matters here is where he was standing when he wrote it. Gruber's own acknowledgements place the work inside the ARPA Knowledge Sharing Effort. ARPA is the Advanced Research Projects Agency, the American military research funder, later renamed DARPA with Defense on the front. And the operative word in that programme's name is sharing.
 
-That's a colossal waste, and in the early nineties DARPA — the Defense Advanced Research Projects Agency, the American military research funder — paid for a programme to fix it. It was called the Knowledge Sharing Effort, and the operative word is sharing. The problem it addressed was not "how do we reason better." It was "how do we reuse what somebody else already built."
+Read the definition next to the name of the programme and the shape of the thing becomes obvious. Gruber's ontology is an interface specification. It is the language two agents use to talk to each other about a domain, and — this is his sentence — "the agents sharing a vocabulary need not share a knowledge base; each knows things the other does not." An agent that supports the interface is not obliged to store its knowledge that way internally at all.
 
-That is where our word comes from, and knowing it explains a great deal about what ontologies are shaped like.
+That is why an ontology can sit on top of systems that share nothing else. Two teams, two internal representations, neither of which is going to be rewritten. What do they have to agree on? Not their code. Not their storage. The vocabulary, and a written-down account of what the vocabulary means, explicit enough that a machine can check it.
 
-Tom Gruber, working in that context, published the definition in 1993: an ontology is an explicit specification of a conceptualization. We took that apart in lecture one, so I'll only restate the framing that matters here. Gruber describes an ontology as an interface specification. It's the language two agents use to talk to each other about a domain, and an agent that supports the interface is not required to use those terms internally.
+In nineteen ninety-seven Willem Borst revised the definition to "a formal specification of a shared conceptualization." That word, shared, adds consensus. And I'd say the addition is really the original mission catching up with the sentence: an ontology only one team agrees with does not solve a sharing problem.
 
-Notice how neatly that answers the Knowledge Sharing Effort's actual problem. Two systems, built by different teams, with different internal representations, neither of which is going to be rewritten. What do they need to share? Not their code. Not their storage. Just the vocabulary, and a written-down account of what the vocabulary means, precise enough that a machine can check whether you're using it consistently.
+So of the words in that definition, two carry the weight. Explicit — the commitments are written down and machine-readable. And, after Borst, shared — more than one party agreed to them.
 
-In 1997 Willem Borst revised the definition to "a formal specification of a shared conceptualization," adding the requirement of consensus. And that addition is really a restatement of the original mission. An ontology that one team agrees with doesn't solve a sharing problem.
+There's one more strand feeding into this moment, and it's the one that makes the artifact computable. Description logics. They are a family of formal knowledge-representation languages, more expressive than propositional logic and less expressive than first-order logic, built out of concepts, roles, individuals and axioms, and deliberately balanced so that expressive power is traded against the cost of reasoning. Many of their core reasoning problems are decidable — meaning a program is guaranteed to stop and give you an answer rather than running forever. Description logics are the logical foundation of OWL, the Web Ontology Language, and of its profiles, and they are the whole subject of lecture six.
 
-I should mention the other technical strand feeding into this moment, because it's what makes the artifact computable. Through the 1970s and 80s, a family of knowledge representation systems descending from one called KL-ONE had been working out how to build structured descriptions of concepts and compute with them automatically. That work matured into description logics, which are a family of decidable fragments of first-order logic — decidable meaning a program is guaranteed to terminate with an answer rather than running forever. Description logics are what OWL is built on, and they're the subject of lecture six.
+The trade behind those profiles is a single sentence. Adding operators, and letting the concept hierarchy get more complicated, usually increases the computational complexity of inference. Profiles are what you get when a standards committee takes that sentence seriously.
 
-So two traditions converge in the early nineties. From the AI side, decades of experience with the knowledge acquisition bottleneck and with brittleness, plus a formal apparatus for computing over concept descriptions. From the systems side, a funding programme whose goal was reuse. Ontology, in the engineering sense, is the artifact where those meet.
+So two traditions meet in the early nineties. From the artificial intelligence side, Cyc's hard-won verdict that background knowledge is the bottleneck, plus a formal apparatus for computing over concept descriptions. From the systems side, a funding programme whose goal was reuse. Ontology, in the engineering sense, is the artifact where those two meet.
 
-Let me finish by putting Cyc back on the table, because it has become relevant again in a way that would have surprised everyone in 1995.
+Let me put Cyc back on the table one last time, because it has become relevant again in a way that would have surprised everyone in nineteen ninety-five.
 
-Lenat's founding premise was that a system trained on text alone will never acquire common sense, because the commonsense facts are exactly the ones nobody writes down. Large language models are the most direct test of that premise ever conducted. And on the surface, they appear to falsify it. Ask a current model whether half a table is a table, and it will tell you no, and explain why, without anyone having hand-crafted an axiom.
+Cyc's motivating claim is that statistics alone will not resolve commonsense questions. That is precisely the claim large language models contest most directly, because they absorb an enormous amount of exactly that background from text, and nobody hand-wrote a single axiom to put it there. The paper is from nineteen ninety-five and says nothing about them — it could not.
 
-But look at what the axiom gave you that the model does not. The axiom is inspectable — you can read it. It's consistent — a reasoner will tell you if it contradicts another one. It's attributable — somebody entered it and you can ask why. And it's stable — it gives the same answer every time, and it doesn't change when the vendor ships a new version. A language model's answer has none of those four properties.
+The counter-argument I'd make is mine, not Lenat's, and I want to flag it as mine. What the axiom gave you that the model does not is three properties. It is inspectable: you can read it. It is consistent, in the sense that a reasoner will tell you when it contradicts another axiom. And it can be audited — you can ask where it came from and why. What a model absorbs has none of those three. Notice, incidentally, what Cyc sells on commercially today: explainability and auditability. Not coverage.
 
-So the honest position, I think, is that Lenat was wrong about the acquisition problem and right about the auditability problem, and the field is still working out what to do with that split verdict. We'll come back to it properly in the final lecture.
-
-I mentioned KL-ONE in passing and I want to come back to it, because the argument it settled is one that keeps being relitigated by people who don't know it happened.
-
-Through the 1970s, knowledge representation split into two camps, and the split was about whether meaning should be structural or logical.
-
-One camp built frames, and the idea came from Marvin Minsky. A frame is a structured description of a kind of thing, with named slots. A Restaurant frame has slots for the food, the staff, the paying. Slots have default values, so unless told otherwise you assume the restaurant has waiters. Frames connect to each other, and you inherit slots from more general frames. Frames were intuitive, they fit how programmers already thought, and they produced systems that did impressive things quickly.
-
-The other camp said: what does a frame mean? If I write a slot on a frame, what exactly have I asserted? And in 1980 a researcher named Bill Woods wrote a paper called "What's in a Link?" that made the problem impossible to ignore. He pointed out that when you draw an arrow between two boxes in a semantic network, the arrow could mean half a dozen different things. It might mean every instance of this has that. It might mean typically. It might mean by definition. It might just mean "somebody drew a line here." And crucially, the software processing it had no way to tell, so different implementations processed the same diagram differently.
-
-KL-ONE was the response. It was a system that kept the structured, frame-like feel — you still describe concepts with their parts — but gave every construct a defined logical meaning. And once you had that, you could compute with it. You could ask whether one concept description necessarily subsumes another, and get an answer that was correct rather than merely plausible. That operation, automatic classification, was KL-ONE's headline capability, and it's the operation at the centre of lecture six.
-
-The lesson from that period is one sentence long, and it is the reason this entire field exists: a diagram whose arrows have no defined meaning cannot be computed with, only looked at.
-
-Which, I'd point out, is the state of most architecture diagrams, most data model diagrams drawn in slide software, and a great deal of what gets called an ontology in corporate settings. If nobody can say what the arrow means, you have a picture.
-
-The KL-ONE line then ran into a wall of its own, and the wall is worth knowing about because it shaped everything that followed. Researchers discovered that some of the languages they'd built were undecidable — meaning that for certain inputs, the classification algorithm would simply never terminate. Others were decidable but with terrible worst-case behaviour. So through the late eighties and nineties an enormous amount of careful work went into mapping exactly which combinations of features were tractable and which weren't. That's the description logic complexity landscape, and it's the reason OWL has profiles rather than a single language. Those profiles aren't arbitrary product decisions. Each one sits at a known point on a map that took twenty years to draw.
-
-Now let me return to Cyc for a moment with a fairer eye, because I've been using it as a cautionary tale and it deserves better than that.
-
-Cyc's microtheory idea, which I mentioned earlier, has aged extremely well and is under-appreciated. The insight is that global consistency is the wrong goal for a large knowledge base. Real human knowledge is locally consistent and globally contradictory. What you believe about physics when driving a car is not what you believe when doing quantum mechanics, and neither belief is wrong within its context. So you partition the knowledge base into contexts, each internally coherent, with explicit relationships between them.
-
-Compare that to how ontology engineering handles the same problem now. Modularisation. Import closures. Named graphs. Application profiles. All of them are versions of the same recognition: one consistent global model of everything is not achievable and not necessary, and the engineering problem is managing the boundaries between locally consistent pieces.
-
-Cyc got there in the eighties, and the field partly reinvented it.
-
-The other thing Cyc got right, which nobody wants to say out loud, is the diagnosis. Lenat said statistical systems fail without background knowledge, and for thirty years he looked wrong in the short term and right in the long term. He was right that background knowledge is the bottleneck. What he got wrong was where it would come from — he assumed the only way in was through a keyboard, one axiom at a time, and it turned out there was another door.
-
-Whether what came through that door is knowledge in the sense he meant is the question we end this series with.
-
-Last thing on the Knowledge Sharing Effort, because there's a piece of it that survived and that you may have used without knowing where it came from.
-
-The programme produced several artifacts. One was a language called KIF, the Knowledge Interchange Format, a first-order logic syntax designed for exchanging knowledge between systems rather than for use inside any one of them. Another was Ontolingua, a server for authoring and translating ontologies between representation languages. Neither is in use today. But the design assumption underneath both of them — that the interchange format should be separate from the internal representation, and that translation between them is a first-class problem — is the assumption behind RDF, behind the multiple serialisations we covered last lecture, and behind every "export to" button in every ontology editor.
-
-The Knowledge Sharing Effort failed to produce a lasting standard and succeeded in establishing a lasting architecture. That's a more common outcome in this field than people admit, and it's worth remembering when evaluating whether a research programme was worth its funding.
+So the honest position, as I read it, is that Lenat may have been wrong about where the background knowledge would come from and right about what you lose when it arrives any other way. The field is still working out what to do with that split verdict, and we end the series on it.
 
 So, the claim to keep.
 
-The computer-science sense of "ontology" was invented to solve a sharing problem, not a reasoning problem. That's why an ontology is an interface specification rather than a storage format, and why the definition acquired the word "shared." And the field's founding megaproject, Cyc, is the standing warning about knowledge work whose payoff sits at a threshold rather than arriving in increments.
+The computer-science sense of "ontology" was invented to solve a sharing problem between knowledge-based systems, not a reasoning problem. That is why an ontology is an interface specification rather than a storage format, and why the definition eventually acquired the word "shared." And the field's founding megaproject, Cyc, bet everything on a critical mass it never reached — which makes it the standing warning about knowledge work whose payoff sits at a threshold instead of arriving in increments.
 
 Next time, the moment this quiet engineering discipline was handed the entire World Wide Web.

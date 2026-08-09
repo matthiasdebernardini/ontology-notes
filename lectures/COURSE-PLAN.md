@@ -66,14 +66,14 @@ transfer to computing and what did not.
 
 ### 3. Quine, and Ontology as a Property of Theories
 
-**Claim to retain:** To be is to be the value of a bound variable. Ask not
-what exists, but what your model must quantify over to be true.
+**Claim to retain:** To be is to be the value of a variable — Quine's own
+wording, not the familiar "bound variable" version, which is Boolos's later
+title. Ask not what exists, but what your model must quantify over to be true.
 
-**Beats:** the problem of non-being and Quine's Plato's-beard opening; the
-move from world to theory; the criterion stated plainly; worked example on an
+**Beats:** the problem of non-being; the move from world to theory; the criterion stated plainly; worked example on an
 employee schema; why the criterion is silent about truth; why that silence
-makes ontology alignment permanent rather than embarrassing; the line from
-Quine to Guarino to OWL's model theory.
+makes ontology alignment permanent rather than embarrassing; the structural resemblance between
+Quine's criterion and Guarino's construction, which cites neither the other.
 
 **Sources:** `notes/quine-ontological-commitment.md`,
 `notes/gruber-ontology-definition.md`, `notes/ontology-matching.md`,

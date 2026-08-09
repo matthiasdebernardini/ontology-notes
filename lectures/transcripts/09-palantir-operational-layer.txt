@@ -8,9 +8,9 @@ Start with their own framing, which is more interesting than the marketing usual
 
 Palantir's architecture documentation says the Ontology is the system at the heart of their architecture, and that it is designed to represent the complex, interconnected decisions of an enterprise, not simply the data. Decisions, not data. Hold onto that, because everything else follows from it.
 
-And there's a second statement, which is a direct swipe at their competitors and also a useful piece of self-description. They say, and I'm quoting: the Ontology is not a semantic layer. The fourfold integration and operationalisation of data, logic, action, and security cannot be accomplished with a thin semantic layer or a monolithic design.
+And there's a second statement, which is the most useful piece of self-description in the whole document. They say, and I'm quoting: the Ontology is not a semantic layer. The fourfold integration and operationalisation of data, logic, action, and security cannot be accomplished with a thin semantic layer or a monolithic design.
 
-So they're distancing themselves from the whole category of "we put a vocabulary over your warehouse." Let's see what they put there instead.
+So they're distancing themselves from the whole category of "we put a vocabulary over your warehouse." That description of the category is mine, not theirs, and it's worth one sentence: a semantic layer sits between a warehouse and the people asking questions of it, so that revenue means one thing in every dashboard. It answers questions. It has no verbs. Let's see what Palantir puts there instead.
 
 The fourfold structure is data, logic, action, and security. I'll take them in turn.
 
@@ -18,7 +18,7 @@ Data first. Their documentation describes it flowing in from every conceivable s
 
 Now, the semantic elements. These are the nouns, and if you've followed the series they'll look familiar with the labels changed.
 
-An object type is the schema definition of a real-world entity or event. An object, or object instance, is one of them — a single real-world entity or event. An object set is a collection of them. Their worked example: you create an Employee object type defining the characteristics of all employees. An object is one employee, Melissa Chang, say. An object set is a group, like all tenured employees. Same pattern with a Flight object type, where an object is the specific flight from JFK to San Francisco on a given date.
+An object type is the schema definition of a real-world entity or event. An object, or object instance, is one of them — a single real-world entity or event. An object set is a collection of them. Their worked example: you create an Employee object type defining the characteristics of all employees. An object is one employee, Melissa Chang, say. An object set is a group, like all tenured employees. Same pattern with a Flight object type, where an object is the specific flight from New York to San Francisco on a given date.
 
 A link type is the schema definition of a relationship between two object types, and a link is one instance of that relationship. Employee to Employer. Flight to assigned Aircraft. Links can also run between two objects of the same type, which is how you model a manager and a direct report.
 
@@ -44,19 +44,19 @@ Think about what that means. Every operational decision anyone makes through the
 
 Fourth element, security, and Palantir treats it as woven through the other three rather than layered on top. Their worked example is a medical manufacturer with plants, work orders, customers, inbound packages, and outbound shipments drawn from hundreds of sources. Production teams need global telemetry on machines and finished goods. Warehouse associates have restrictions by region. Supply chain analysts have row and column level restrictions on sensitive fields.
 
-And then the part that shows where the product is heading. They point out that when teams build AI agents, those agents must have security scopes that either inherit from a human user or come from a project's permission structure. The ability to trigger a purchase order might be tightly restricted while running a scenario to gauge the impact of a reallocation is more permissible, and the underlying optimisers and language-model calls might have different scopes again. Their claim is that the security system reconciles all of those policies at the moment of interaction, across tens of thousands of humans and agents.
+And then the part that shows where the product is heading. They point out that when teams build artificial-intelligence agents, those agents must have security scopes that either inherit from a human user or come from a project's permission structure. The ability to trigger a purchase order might be tightly restricted while running a scenario to gauge the impact of a reallocation is more permissible, and the underlying optimisers and language-model calls might have different scopes again. Their claim is that the security system reconciles all of those policies at the moment of interaction, across tens of thousands of humans and agents.
 
 They also describe the whole thing as, in many settings, a digital twin of the organisation, containing both semantic and kinetic elements. And they group the implementation into three parts: an Ontology Language that models the semantics, an Ontology Engine, and an Ontology Toolchain.
 
 Right. Now the comparison, which is why this lecture exists.
 
-Take the Palantir Ontology and the W3C stack and put them side by side.
+Take the Palantir Ontology and the W three C stack and put them side by side.
 
 Both are trying to do the same fundamental thing, and it's Gruber's thing from lecture four: create a shared vocabulary that sits above heterogeneous systems that will never be rewritten, so that people and programs can talk about the domain in common terms. That's a genuine shared ancestry, not a coincidence of naming.
 
 Now the differences, and there are four that matter.
 
-First, open world against closed world. OWL assumes your data is a fragment of a larger world, so unstated means unknown. Palantir's Ontology is a closed operational system for one organisation. If the shipment isn't there, it isn't there. That single difference explains most of the others, and honestly, for the enterprise use case, the closed-world assumption is the right one. We spent half of lecture six on how much trouble the open-world assumption causes people who don't need it.
+First, open world against closed world. OWL, the Web Ontology Language, assumes your data is a fragment of a larger world, so unstated means unknown. Palantir's Ontology is a closed operational system for one organisation. If the shipment isn't there, it isn't there. That single difference explains most of the others, and honestly, for the enterprise use case, the closed-world assumption is the right one. We spent half of lecture six on how much trouble the open-world assumption causes people who don't need it.
 
 Second, reasoning. There's no reasoner in the Palantir sense. Nothing derives subsumption. Nothing classifies your object types into an inferred hierarchy. Nothing tells you your model describes an impossible world. That capability, which the entire description logic tradition was built to provide, is absent. What you get instead is logic in functions, which is procedural code, evaluated when called.
 
@@ -64,7 +64,7 @@ Third, federation. OWL was built so anyone could publish and anyone could merge,
 
 Fourth, and this is the one that runs the other way, actions and permissions are first-class. OWL cannot express "an authorised human resources employee may change this person's role, which creates a link to the new manager and notifies both managers." It has no vocabulary for that. It's a language for what is, not for what may be done. There have been research efforts to bolt actions onto description logics and none of them are in common use.
 
-So the honest summary is that the two traditions are trading in opposite directions. The W3C stack gives you deduction, open-world semantics, and public federation, and gives you nothing about action or permission. Palantir gives you action, permission, and writeback, and gives up deduction and federation.
+So the honest summary is that the two traditions are trading in opposite directions. The W three C stack gives you deduction, open-world semantics, and public federation, and gives you nothing about action or permission. Palantir gives you action, permission, and writeback, and gives up deduction and federation.
 
 Which raises the question of whether the word is being used honestly, and I want to be fair here.
 
@@ -94,7 +94,7 @@ I'd say it optimises for the round trip. Data comes in from the operational syst
 
 That loop is the product. Everything else serves it. The reason actions are first-class is that the loop needs a controlled way to close. The reason security is woven through rather than layered on is that the loop crosses trust boundaries at every step. The reason writeback exists is that a loop with no memory can't be improved, and the reason they say the data asset grows richer as decisions are captured is that they're accumulating a record of how the organisation actually decides, which is something no operational system holds.
 
-Now compare that with what the W3C stack optimises for, which is the merge. Independent parties publish, graphs combine, identity is global, and a reasoner finds what follows from the combination. Everything in that stack serves the merge, which is why identifiers are global, why the world is open, and why there's no notion of an action — an action is a thing one party does inside one system, and the merge doesn't care.
+Now compare that with what the W three C stack optimises for, which is the merge. Independent parties publish, graphs combine, identity is global, and a reasoner finds what follows from the combination. Everything in that stack serves the merge, which is why identifiers are global, why the world is open, and why there's no notion of an action — an action is a thing one party does inside one system, and the merge doesn't care.
 
 Two different loops. Merge versus round trip. Once you see that, the divergence in every design decision follows, and neither tradition looks confused any more. They're solving different problems and they both named the solution "ontology," because both of them are, in Gruber's sense, an explicit specification of what a domain contains.
 
@@ -116,6 +116,6 @@ None of that makes the engineering wrong. It makes the deployment context the wh
 
 So, the claim to keep.
 
-Palantir's Ontology pairs semantic elements — object types, properties, links — with kinetic elements — actions, functions, dynamic security — and commits user decisions back as data. It has no reasoner, no open-world semantics, and no federation across ontologies. It expresses actions and permissions, which the W3C stack cannot express at all. The two traditions share Gruber's definition and almost nothing else.
+Palantir's Ontology pairs semantic elements — object types, properties, links — with kinetic elements — actions, functions, dynamic security — and commits user decisions back as data. It has no reasoner, no open-world semantics, and no federation across ontologies. It expresses actions and permissions, which the W three C stack cannot express at all. The two traditions share Gruber's definition and almost nothing else.
 
 Next time, the final lecture: what happens when an ontology like that is installed inside a state institution, and what all of this means now that machines can read.
