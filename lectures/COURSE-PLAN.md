@@ -1,8 +1,27 @@
 # Ontologies: A Ten-Lecture Course
 
-Ten lectures, roughly twenty minutes each, about three and a half hours total.
-Written to be listened to rather than read. Transcripts live in
-`transcripts/` as plain text files, numbered in listening order.
+Ten lectures, twenty to thirty minutes each, about four hours ten total at a
+narration pace of one hundred and forty-five words per minute. Written to be
+listened to rather than read. Transcripts live in `transcripts/` as plain text
+files, numbered in listening order.
+
+Length follows the sources. Each lecture runs exactly as far as the notes
+listed for it carry it, and no further, so the files differ in length by a
+third or more. Shipped word counts:
+
+| # | Lecture | Words | Approx. minutes |
+| --- | --- | ---: | ---: |
+| 1 | Three Things People Mean by "Ontology" | 3,143 | 22 |
+| 2 | From Aristotle to Wolff | 2,815 | 19 |
+| 3 | Quine, and Ontology as a Property of Theories | 3,091 | 21 |
+| 4 | The Cathedral: Cyc | 2,780 | 19 |
+| 5 | The Semantic Web | 3,913 | 27 |
+| 6 | How the Machinery Actually Works | 4,470 | 31 |
+| 7 | Building One for Real | 4,081 | 28 |
+| 8 | The Criticisms That Landed | 4,414 | 30 |
+| 9 | Palantir: The Ontology as an Operational Layer | 4,140 | 29 |
+| 10 | The Politics of an Installed Ontology | 3,751 | 26 |
+| | **Total** | **36,598** | **252** |
 
 Every claim traces to a note in this repository. The source notes are listed
 per lecture below, and the transcripts name their sources aloud where it
@@ -13,8 +32,9 @@ matters.
 - **Solo lecturer.** One voice, spoken prose, no bullets, no code, no URLs, no
   section headings inside the transcript. Anything a narrator cannot say out
   loud has been cut or rewritten.
-- **Twenty-minute chunks.** Each file is one sitting, roughly 2,700 to 3,100
-  words at a normal narration pace of about 145 words per minute.
+- **One sitting per file.** Twenty to thirty minutes at about 145 words per
+  minute. There is no word target. Quality is the constraint and length is the
+  by-product: a lecture stops when its notes are spent.
 - **Self-contained openings.** Each lecture starts by saying where it is in the
   arc, because listeners on a walk lose the thread between sessions.
 - **One recap beat.** Each lecture ends by stating the single claim it wants
