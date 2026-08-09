@@ -1,7 +1,7 @@
 # Shirky, "Ontology Is Overrated" (2005)
 
 **What it is**
-Clay Shirky's argument, "a heavily edited concatenation" of two 2005 talks — "Ontology Is Overrated" at O'Reilly ETech in March and "Folksonomies & Tags" at IMCExpo in April — that designing categories to cover possible cases in advance "is both widely used and badly overrated in terms of its value in the digital world." He is precise about his target: not classification in general, but *ontological* classification, which organises entities by their essences and possible relations, and assumes a new item's logical place already exists before the item does.
+Clay Shirky argues that designing categories in advance to cover cases that have not happened yet is badly overrated in digital systems. His own wording is that the strategy "is both widely used and badly overrated in terms of its value in the digital world." The essay is "a heavily edited concatenation" of two 2005 talks: "Ontology Is Overrated" at O'Reilly ETech in March and "Folksonomies & Tags" at IMCExpo in April. He is precise about his target: not classification in general, but *ontological* classification, which organises entities by their essences and possible relations, and assumes a new item's logical place already exists before the item does.
 
 **Key concepts**
 - **The periodic table as the best case.** It organises by proton count and gets enormous predictive value. Even so, "noble gas" is a frozen accident: helium is no more essentially a gas than mercury is essentially a liquid, but the chemists could not get it cold enough to see that. If a near-perfect scheme over physical essences still has context errors, softer domains have no chance.

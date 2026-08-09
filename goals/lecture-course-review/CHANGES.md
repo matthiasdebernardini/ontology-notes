@@ -180,3 +180,85 @@ survived and each attacks a different layer"; the closing "failures of the model
 world … failure of the world against the model"; "choosing between deriving what follows and
 governing what may be done". These are argument, not assertion. Flagged here so the absence
 is a decision rather than an oversight.
+
+## Task 4 — The site generator
+
+### Determinism and re-run safety
+
+`scripts/build_site.py` deletes `site/src` on every run. Verified safe: the only
+hand-written files under `site/` are `README.md` and `book.toml`, both at the top level,
+both outside `src/`, and both the only files git tracks there. `site/src` and `site/book`
+are gitignored. Running the generator twice in a row produces byte-identical output
+(`diff -r`), and it uses no clock, no random source, and no dict iteration whose order
+could vary — `CONCEPTS` and `NOTE_INDEX.json` both iterate in stable order and everything
+sorted is sorted explicitly.
+
+### SUMMARY coverage
+
+Checked mechanically in both directions: every `.md` file the generator writes under
+`site/src` appears in `SUMMARY.md`, and every path `SUMMARY.md` links to exists. Zero
+orphans, zero dangling links. The 22 section headings use mdBook's draft-chapter form
+`- [Section]()`, which is a sidebar heading with no page of its own — not a link to a
+missing file.
+
+### The link checker
+
+New: `scripts/checklinks.py`, tracked, standard library only, directory as the first
+argument. It checks every local `href` and `src` — relative and root-relative,
+URL-encoded or not, including the raw `.txt` transcript paths — resolves directory
+targets to `index.html`, checks `#fragment` targets against the `id` and `name` anchors
+in the destination page, skips external schemes, prints each broken link with its source
+file, and exits nonzero.
+
+It earned its keep on the first run: 4 broken links, all of them cross-references to
+notes I had just added to `notes/semantic-web-retrospective.md` under guessed slugs
+(`cidoc-conceptual-reference-model-crm`, `fibo-financial-industry-business-ontology`;
+the real slugs are `cidoc-crm-conceptual-reference-model` and `fibo`). Fixed. It now
+reports 201 pages, 7,077 local links, 0 broken.
+
+### The 26 CONCEPTS definitions
+
+Audited against the corpus, term by term. Result: 9 kept as written, 16 rewritten from a
+note's own text, 1 cut. Evidence and spans in `EVIDENCE.md` Part 4. The load-bearing ones:
+
+- **Justification** — cut. The string "justification" occurs **zero times** in `notes/`.
+  The corpus talks about *explanations*, so the entry became **Explanation**, written from
+  `notes/elk.md`.
+- **Punning** — the definition asserted OWL 2 punning as a working feature. The corpus's
+  only mention, in `notes/yamlpyowl.md`, says most OWL reasoners *do not support it*,
+  which is why that tool generates proxy individuals instead. Rewritten to say that.
+- **Closed-world assumption** — "Databases do this" is supported by no note. The corpus's
+  actual closed-world exemplars are F-logic, SPIN constraints, and Palantir's Ontology.
+- **Semantic layer** — "because a semantic layer cannot act" was the definition's own
+  invention; `notes/palantir-ontology.md` reports Palantir's disclaimer and gives no reason
+  for it.
+- **Subsumption** — "computed rather than declared" is contradicted by `rdfs:subClassOf`
+  being a declared term and by `notes/tawny-owl.md`'s asserted/inferred split. It is both.
+- **TBox** — "class **and property** definitions" is contradicted by `notes/sparql-dl.md`,
+  which separates TBox, RBox and ABox; property axioms are the RBox.
+- **Torque** — dropped both load-bearing halves of the note's definition (the mismatch is
+  with *the person's own account of themselves*, and *the system wins*). Restored.
+- **Unique name assumption** — the `owl:sameAs` clause is supported by no note.
+- **Object type** — "given behaviour" is wrong by `notes/palantir-ontology.md`'s own
+  division: behaviour is kinetic (action types, functions), not semantic.
+
+### The 181 truncated glossary definitions
+
+Checked all 181, not a sample, with a throwaway script that put each generated first
+sentence beside its full "What it is" text and flagged short definitions, abbreviation
+splits, hard 260-character truncations, and negations stranded in the remainder. 40 pairs
+came back flagged; reading them, 3 were real defects and 37 were first sentences that
+stand alone correctly.
+
+The three, all fixed by rewriting the note's opening sentence, never the generated output:
+
+- `quine-ontological-commitment` — the glossary entry read **"W.V.O."** The sentence
+  opened with the initials.
+- `cyc-lenat-1995` — the entry read **"Douglas B."** Same cause.
+- `shirky-ontology-is-overrated` — the opening sentence ended on a quotation mark, which
+  the sentence regex walks past, so the entry hit the 260-character hard truncation
+  mid-quote.
+
+The script was a throwaway and is not kept: the defect class it finds is now visible in a
+single re-run of the same twenty lines, and a permanent script would need maintaining for
+a check that fires once.
