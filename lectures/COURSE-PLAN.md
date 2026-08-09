@@ -16,12 +16,12 @@ third or more. Shipped word counts:
 | 3 | Quine, and Ontology as a Property of Theories | 3,091 | 21 |
 | 4 | The Cathedral: Cyc | 2,780 | 19 |
 | 5 | The Semantic Web | 3,913 | 27 |
-| 6 | How the Machinery Actually Works | 4,470 | 31 |
-| 7 | Building One for Real | 4,081 | 28 |
-| 8 | The Criticisms That Landed | 4,414 | 30 |
+| 6 | How the Machinery Actually Works | 4,055 | 28 |
+| 7 | Building One for Real | 3,986 | 27 |
+| 8 | The Criticisms That Landed | 4,416 | 30 |
 | 9 | Palantir: The Ontology as an Operational Layer | 4,140 | 29 |
 | 10 | The Politics of an Installed Ontology | 3,751 | 26 |
-| | **Total** | **36,598** | **252** |
+| | **Total** | **36,090** | **249** |
 
 Every claim traces to a note in this repository. The source notes are listed
 per lecture below, and the transcripts name their sources aloud where it
