@@ -1,0 +1,101 @@
+Lecture Three. Quine, and Ontology as a Property of Theories.
+
+This is the third of ten talks about ontologies. In the first we separated three senses of the word. In the second we followed the word from Aristotle through Wolff and found that engineering kept the vocabulary but dropped the claim to uniqueness. Today we look at the move that made ontology usable by engineers, and it was made by a man who spent most of the paper explaining why the question, as normally asked, cannot be answered.
+
+The paper is called "On What There Is." It was published in 1948 by Willard Van Orman Quine, and it's about six thousand words long. If you read one primary text from this entire series, read that one.
+
+Quine opens with a joke that turns out to be the whole problem. He says the ontological question can be stated in three words: what is there? And it can be answered in one: everything. And everyone will accept that answer as true. The trouble is that it leaves the disagreements exactly where they were, because people disagree about the cases.
+
+Then he gives the puzzle that had blocked the field, and he gives it a name. He calls it Plato's beard.
+
+Here's the puzzle. Suppose I say Pegasus does not exist. That seems like a straightforwardly true sentence. But look at what I've apparently done. To say Pegasus does not exist, I had to talk about Pegasus. I had to refer to something in order to say it isn't there. If Pegasus were truly nothing at all, what was my sentence about? The doctrine seems to be that in order to deny that something exists, you must first grant it enough existence to be denied. Quine's phrase for this tangle is Plato's beard, and he notes drily that it has historically proved so tough that it's dulled the edge of Occam's razor.
+
+Now, a lesser philosopher spends a career on that puzzle. Quine's response is to change the question, and this is the move that matters for us.
+
+He stops asking what exists. He starts asking what a theory says exists.
+
+That's it. That's the whole trick, and it's one of those moves that looks trivial once made and was invisible for two thousand years. Instead of arguing about whether numbers really exist, which nobody can settle, ask a narrower and completely answerable question: does this body of statements — this theory, this model, this system — require numbers to exist in order for its statements to come out true?
+
+That question has a definite answer, and Quine gives you a procedure for finding it. First, regiment your theory into first-order logic. First-order logic, sometimes called predicate logic, is the standard formal language of "for all" and "there exists," with variables ranging over things and predicates saying what's true of them. Once your theory is in that form, look at what the variables range over. Whatever must be in that range for your statements to be true — that's what your theory is committed to.
+
+The slogan is famous, and it's five words long: to be is to be the value of a bound variable.
+
+Let me unpack the technical bit, because it's easy to misread. A bound variable is one that's governed by a quantifier. If I write "there exists an x such that x is a delayed shipment," the x is bound by "there exists." I have committed my theory to at least one delayed shipment. If instead I write "shipment forty-two is delayed," I've used a name, not a variable, and there's an old debate about whether names carry commitment. Quine's answer is that they don't, because names can be paraphrased away into descriptions. That's why he insists on the regimentation step. You rewrite until only quantifiers and predicates are left, and then the commitments are visible on the page rather than hidden in the vocabulary.
+
+Now, why does this matter to somebody who builds systems?
+
+Because it converts an unanswerable philosophical question into a code review.
+
+Let me do a worked example. Take an ordinary employee database. Table Employee, with columns for name, hire date, and manager ID, where manager ID points to another row in Employee. Apply Quine's criterion. What must exist for the statements this schema can make to be true? Employees must exist. A managing relation between employees must exist. That's the ontology of your database. Two kinds of thing: employees, and the manager-of relation.
+
+Now watch what you cannot say. Someone comes to you and asks: which teams had more than thirty percent turnover last quarter? And you go looking, and there is no way to answer, because your schema doesn't quantify over teams. Teams aren't in the range of any variable. It's not that the data is missing. It's that the model has no place for the data to go. You would have to change the theory, not the contents.
+
+Or a subtler one. Someone asks: who was Melissa's manager in March? Your schema has a manager ID on the employee row, which means it's committed to employees having a manager, singular, now. It is not committed to a managing relation that has a start date and an end date. Time isn't in the ontology. To answer, you don't add a column. You add a new kind of thing to the world your system believes in — a management assignment, which is an entity in its own right, with a manager, a report, and an interval.
+
+That's Quine's criterion doing engineering work. Read the quantifiers, find the commitments, and you know in advance which questions your system will never be able to answer, before anyone asks them.
+
+This is, incidentally, the technique behind competency questions, which we'll meet properly in lecture seven. A competency question is a question your ontology must be able to answer, written down before you model anything. It's Quine's criterion run backwards: start from the questions, derive the commitments they require, then build a model that has them.
+
+Now I want to spend a few minutes on what Quine's criterion deliberately does not do, because this is where people over-read it and it's the source of a lot of pointless argument.
+
+The criterion is completely silent about truth. It tells you what a theory is committed to. It says nothing about whether the theory is any good, or whether the things it's committed to are actually out there. Quine is explicit about this: the criterion is a test of what a theory says, not a test of what's so.
+
+That silence has a consequence I want you to sit with, because it dissolves something that looks like a scandal in this field.
+
+Two teams can build models of the same domain, both correct, both useful, both internally consistent, with completely different ontological commitments. A logistics company might commit to shipments, and a shipment has a route. Their partner might commit to legs, where a leg has an origin and a destination, and a shipment is just a name for a sequence of legs. Neither team is wrong. They regimented differently, because they answer different questions. One of them cares about customer promises. The other cares about vehicle utilisation.
+
+Now, when those two companies try to exchange data, somebody has to write a mapping. And there's a strong temptation to treat that mapping as remedial work — as though one side made a mistake, and if only everyone had modelled properly the mapping would be unnecessary. Quine tells you that's the wrong frame. Ontological commitment is relative to a theory, and different theories serving different purposes will commit differently. The mapping isn't cleanup. It's a permanent, first-class engineering artifact.
+
+That's why ontology alignment — sometimes called ontology matching — is its own research field with its own conferences, its own evaluation initiative that runs annual benchmarks, and its own tool ecosystem. There are systems built purely to match two ontologies and repair the inconsistencies that result: AgreementMakerLight for efficient automated matching, LogMap for large-scale matching with reasoning and inconsistency repair. There's even a standard format, the Alignment API, whose job is to represent correspondences between ontologies so they can be shared. None of that infrastructure would need to exist if there were one right way to carve up a domain. Quine explains why there isn't.
+
+Let me trace the line forward to the machinery, because it's more direct than you might expect.
+
+Quine's criterion is about a first-order language and what its variables range over. When Nicola Guarino wrote his formal treatment of ontology in the late nineties and revisited it in 2009, he defined ontological commitment as a mapping from a vocabulary to an intended structure — extending the standard notion of a first-order model to what he calls an intensional first-order structure. That is Quine's criterion, made precise, with the machinery of model theory attached.
+
+And that's exactly what OWL, the Web Ontology Language, implements. OWL has what's called a model-theoretic semantics. Its meaning is defined by specifying which interpretations satisfy which axioms — which possible worlds your axioms rule in and which they rule out. When an OWL reasoner tells you your ontology is inconsistent, it's telling you that no interpretation satisfies all your axioms at once. You've committed to a world that can't exist. That is Quine's question, asked by a program, in a few milliseconds.
+
+So the chain runs: Aristotle asks what kinds of things there are. Wolff tries to derive the answer deductively and claims it's the only answer. Quine says stop, ask what a theory commits to, and gives a procedure. Guarino formalises the procedure. OWL implements it, and a reasoner runs it over your file.
+
+One caution before I finish, and it's about how the criterion gets misused.
+
+You'll occasionally meet someone who uses Quine to argue that ontology is arbitrary — that since commitment is relative to a theory, and theories are chosen, any model is as good as any other. That doesn't follow, and Quine didn't think it did. He was, in the rest of his work, a fairly ruthless naturalist who thought that our best scientific theories should determine what we take to exist, and he was famously stingy about admitting new kinds of things. Relativity of commitment to a theory doesn't mean all theories are equal. It means the comparison happens at the level of the theory, on grounds of what it can explain and predict and answer, rather than by staring harder at the world and hoping the categories announce themselves.
+
+For engineering, that translates into something concrete. You don't defend a modelling choice by claiming it's how the domain really is. You defend it by showing which questions it answers, at what cost, compared with the alternative you rejected. That's a review you can actually run.
+
+Let me go back and do the setup of the paper properly, because I skated over it and it contains the field's best joke and its most quoted line.
+
+Quine sets up the problem with an imaginary opponent he names Wyman. Wyman's position is the one I described: in order to deny that Pegasus exists, you must first grant Pegasus some shadowy kind of being, otherwise your denial has nothing to attach to. So Wyman populates the universe with unactualised possibles — things that don't exist but subsist, waiting around in a kind of ontological departure lounge.
+
+Quine's demolition is the funniest passage in analytic philosophy, and I'll paraphrase it. Take the possible fat man in that doorway. Now take the possible bald man in that doorway. Are they the same possible man, or two? How would you decide? How many possible men are in that doorway right now? Are there more possible thin ones than fat ones? How many of them are alike? Would their being alike make them one?
+
+The point is not that the questions are hard. It's that they have no answers, which means Wyman's possible objects have no identity conditions, which means they're not objects at all. Quine's line, and this is the one everyone quotes: no entity without identity. If you cannot say when two of them are the same one, you haven't got a kind of thing. You've got a manner of speaking.
+
+That principle is worth taking straight into engineering, because it's the sharpest test I know for whether a proposed class belongs in a model.
+
+Somebody proposes a class called Engagement. Or Initiative. Or Opportunity. Fine. Now apply Quine: when are two engagements the same engagement? If your team can't answer that in one sentence, the class has no identity conditions and it will cause trouble forever. You'll get duplicates you can't detect, merges you can't justify, and counts that two departments compute differently and both defend. No entity without identity. Ask it in every design review.
+
+And notice this is precisely why the OWL family has a mechanism for keys, and why the biomedical ontologies are obsessive about persistent identifiers with explicit policies about what an identifier denotes. That obsession looks like bureaucracy from outside. It's Quine's principle, operationalised.
+
+There's a second thing in the paper I want to give you, because it's where the criterion becomes a design lever rather than just a diagnostic.
+
+Quine points out that ontological commitment is relative to how you choose to regiment your theory — and that you have choices. A statement that seems to commit you to something can often be paraphrased into one that doesn't. He shows how "there are round square cupolas" can be rewritten so that the apparent object disappears, using Russell's technique of definite descriptions.
+
+For an engineer, this means the same information can be modelled with different commitments, and choosing between them is real design work. Take a common one. Does your system have a Meeting class? Or does it have People, Times, and an attendance relation, with "meeting" being a way of talking about a cluster of those? Both can represent the same facts. But the first commits you to meetings as entities, which means a meeting can have properties, can be linked to, can be referenced from a decision record, and can survive when the attendees change. The second doesn't, and querying for "what happened in that meeting" becomes a pattern-matching exercise.
+
+This is what people mean by reification, when the term gets thrown around. Reification is the act of promoting something that was implicit in a relationship into a thing in its own right. It's exactly Quine's regimentation choice made deliberately. And you can watch it happen in the wild: a system starts with a manager column on the employee record, and three years later there's a ManagementAssignment table, because somebody needed to ask when it started. That's reification arriving late, under pressure, at maximum cost.
+
+Quine's contribution is to give you the vocabulary to make that decision in advance rather than to discover it in a migration.
+
+One caution about the criterion I should state clearly, because there's a technical subtlety that trips people.
+
+Quine's criterion is about what a theory is committed to, which is not the same as what a theory is about. A theory of chemistry is about molecules. But if it uses numbers to state concentrations, and it quantifies over numbers, it's committed to numbers as well. Those commitments come along for the ride, and they're the ones people forget.
+
+The engineering version is that every modelling framework you adopt drags in commitments you didn't choose. Adopt an upper ontology, and you have committed to its top-level distinctions, including the ones you'll never use and the ones you'd disagree with if anyone asked. Adopt a graph model, and you've committed to a world where relationships are binary, which means anything genuinely three-way — a payment from A to B on behalf of C — has to be reified into a node whether you wanted that or not. Adopt a relational model and you've committed to a closed world, where absence means falsehood.
+
+None of those is wrong. All of them are commitments made by the framework rather than by you, and knowing they're there is the difference between a model you understand and a model you inherited.
+
+So, the claim to keep from this lecture.
+
+To be is to be the value of a bound variable. Stop asking what exists in your domain and ask what your model must quantify over for its statements to be true. That question has an answer, you can read it off the model, and it tells you in advance which questions your system will never answer. Different purposes produce different commitments, so mapping between models is permanent work rather than a sign of failure.
+
+Next time, we jump forward two thousand years from Aristotle and about forty from Quine, to the moment computer science needed this word and went looking for it — and to the most expensive experiment the field has ever run.

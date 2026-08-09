@@ -4,7 +4,9 @@ A citation-oriented knowledge base for ontology engineering, Semantic Web
 standards, knowledge graphs, reasoners, editors, vocabularies, and related
 tooling.
 
-The harvest inventory contains **188 entries**. Of those, **168 have structured
+Published as a book: **https://ontology-course.pages.dev**
+
+The harvest inventory contains **201 entries**. Of those, **181 have structured
 notes** and **20 are retained as skipped entries with reasons**, so the corpus is
 both useful and auditable rather than silently incomplete.
 
@@ -12,13 +14,16 @@ both useful and auditable rather than silently incomplete.
 
 | Path | Purpose |
 | --- | --- |
-| `notes/` | 168 human-readable Markdown knowledge notes |
-| `NOTE_INDEX.json` | Machine-readable index of the same 168 notes |
+| `notes/` | 181 human-readable Markdown knowledge notes |
+| `NOTE_INDEX.json` | Machine-readable index of the same 181 notes |
 | `SYNTHESIS.md` | Cross-source explanation of the ontology ecosystem |
-| `manifest.json` | The full 188-entry harvest ledger, including skipped items |
+| `manifest.json` | The full 201-entry harvest ledger, including skipped items |
+| `lectures/` | A ten-part audio course: course plan, transcripts, narration setup |
+| `site/` | mdBook configuration and the deploy recipe for the published book |
 | `README.awesome-ontology.md` | Curated source inventory grouped by topic |
 | `skills/ontology-chat/` | Agent skill and dependency-free knowledge-base query CLI |
 | `scripts/install.py` | Safe local skill installer |
+| `scripts/build_site.py` | Generates the mdBook source tree from the corpus |
 
 Generated knowledge artifacts (`notes/`, `NOTE_INDEX.json`, and
 `SYNTHESIS.md`) are intentionally part of the distributable repository. Raw

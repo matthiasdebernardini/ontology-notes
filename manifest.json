@@ -2523,5 +2523,148 @@
     "repo_size_mb": 0.05,
     "default_branch": "master",
     "archived": false
+  },
+  {
+    "name": "History of the Word \"Ontology\"",
+    "url": "https://www.britannica.com/topic/ontology-metaphysics",
+    "section": "History & Foundations",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "ontology-word-history",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Quine and Ontological Commitment",
+    "url": "https://rintintin.colorado.edu/~vancecd/phil375/Quine.pdf",
+    "section": "History & Foundations",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "quine-ontological-commitment",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Gruber's Definition and Its Successors",
+    "url": "https://tomgruber.org/writing/definition-of-ontology/",
+    "section": "History & Foundations",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "gruber-ontology-definition",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Cyc as a Knowledge-Engineering Programme (Lenat 1995)",
+    "url": "https://faculty.cc.gatech.edu/~isbell/classes/reading/papers/lenat95cyc.pdf",
+    "section": "History & Foundations",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "cyc-lenat-1995",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "The Semantic Web Vision (Berners-Lee, Hendler, Lassila 2001)",
+    "url": "https://www.scientificamerican.com/article/the-semantic-web/",
+    "section": "History & Foundations",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "semantic-web-2001-vision",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "What Happened to the Semantic Web",
+    "url": "https://twobithistory.org/2018/05/27/semantic-web.html",
+    "section": "History & Foundations",
+    "kind": "site",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "semantic-web-retrospective",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "The Knowledge Graph Turn (2012 onwards)",
+    "url": "https://www.vldb.org/pvldb/vol16/p4130-dong.pdf",
+    "section": "History & Foundations",
+    "kind": "site",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "knowledge-graph-turn",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Doctorow, \"Metacrap\" (2001)",
+    "url": "http://www.well.com/~doctorow/metacrap.htm",
+    "section": "Criticism",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "doctorow-metacrap",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Shirky, \"Ontology Is Overrated\" (2005)",
+    "url": "http://shirky.com/essays/ontology-is-overrated-categories-links-and-tags/",
+    "section": "Criticism",
+    "kind": "site",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "shirky-ontology-is-overrated",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Bowker and Star, \"Sorting Things Out\" (1999)",
+    "url": "https://mitpress.mit.edu/9780262522953/sorting-things-out/",
+    "section": "Criticism",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "bowker-star-sorting-things-out",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "The Palantir Ontology",
+    "url": "https://palantir.com/docs/foundry/architecture-center/ontology-system/",
+    "section": "Operational Ontologies",
+    "kind": "site",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "palantir-ontology",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Criticism of Operational Ontologies (Palantir)",
+    "url": "https://doi.org/10.1080/1369118X.2024.2410255",
+    "section": "Criticism",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "palantir-ontology-critique",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
+  },
+  {
+    "name": "Do Language Models Replace Ontologies?",
+    "url": "https://www.vldb.org/pvldb/vol17/p2919-sun.pdf",
+    "section": "Machine Learning",
+    "kind": "paper",
+    "status": "noted",
+    "skip_reason": "",
+    "slug": "llm-ontology-debate",
+    "source_line": 0,
+    "harvest_batch": "lecture-series-research-2026-08"
   }
 ]

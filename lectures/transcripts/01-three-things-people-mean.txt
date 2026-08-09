@@ -1,0 +1,83 @@
+Lecture One. Three Things People Mean by "Ontology".
+
+This is the first of ten talks about ontologies. Over the series we'll cover where the idea came from, how the machinery works, how you'd build one, the arguments against the whole enterprise, and what Palantir means when it uses the word, which is not quite what anyone else means. Today is groundwork. By the end of this lecture you should be able to hear the word "ontology" in a sentence and know which of three completely different things the speaker has in mind.
+
+Let me start with the problem this lecture exists to solve.
+
+Suppose you're at a conference and three people use the word "ontology" in the same hour. The first is a philosopher, and she's talking about whether numbers exist. The second is a biologist, and he's talking about a file he downloaded that has forty thousand terms for gene functions in it. The third works in enterprise software, and she's talking about a layer in a platform that lets a warehouse manager reassign a shipment. All three are using the word correctly. None of them is talking about the same thing. And if you assume they are, you will spend years slightly confused, because the confusion is subtle enough to survive.
+
+So. Three senses.
+
+The first sense is the philosophical discipline. Ontology, in this sense, is the branch of philosophy that asks what exists, and more precisely, what kinds of things can exist and what relations they can stand in. Aristotle called it first philosophy, and he defined it in Book Four of the Metaphysics as the study of being qua being. That phrase, being qua being, is worth pausing on, because it's doing real work. Physics studies things insofar as they move. Biology studies things insofar as they're alive. Ontology studies things insofar as they are, full stop. It's after the attributes something has purely by virtue of existing, rather than by virtue of being a particular kind of thing.
+
+The second sense is a specific theory of what exists. When a philosopher says "Quine's ontology is austere," she doesn't mean Quine had a discipline. She means Quine had a position, a list, a set of commitments about what's real. In this sense ontology is a countable noun. You can have one. You can compare two. You can argue that yours is better. And you'll notice that this is already much closer to how engineers talk. When someone says "the financial industry ontology," they're using the word the way a philosopher uses it in "Quine's ontology" — a particular account, not the discipline that produces accounts.
+
+The third sense is the artifact. A file. Something you can download, open in an editor, run a program over, and check for contradictions. This is the sense that concerns us for most of this series, and it's the youngest by about two thousand three hundred years.
+
+That third sense has a birthday, more or less, and it has a definition that almost everyone in the field quotes. In 1993, Tom Gruber, working in the context of a project called the DARPA Knowledge Sharing Effort — DARPA being the Defense Advanced Research Projects Agency, the American military research funder that also paid for the early internet — defined an ontology as, and I quote, "an explicit specification of a conceptualization."
+
+That sentence has launched about thirty years of argument, so let's take it apart slowly, because it repays the effort.
+
+Start with "conceptualization." Gruber borrowed that term from two earlier researchers, Genesereth and Nilsson, who defined it as the objects, concepts, and other entities that are presumed to exist in some area of interest, and the relationships that hold among them. And they added a line that I think is the single most useful sentence in the whole literature: a conceptualization is an abstract, simplified view of the world that we wish to represent for some purpose. Every knowledge base, every knowledge-based system, is committed to some conceptualization, explicitly or implicitly.
+
+Read that again in your head. Every system is committed to some conceptualization. Explicitly or implicitly. That is the entire argument for doing ontology work, compressed into one sentence. Your software already has an ontology. Every database schema you've ever written is a claim about what kinds of things exist in your domain and how they can relate. When you created a table called Customer with a foreign key to Address, you asserted that customers exist, that addresses exist, that a customer has an address, and — by the absence of anything else — that customers do not have, say, relationships to other customers. You made a metaphysical commitment. You just made it in a hurry, over lunch, and you didn't write down why.
+
+So the question is never whether your system has an ontology. It's whether the ontology is written down where you can inspect it, argue about it, and check it for contradictions.
+
+Which brings us to the other load-bearing word: "explicit." Explicit means the commitments are stated, in a form a machine can read, separately from the code that uses them. Not implied by a table layout. Not living in the head of the one engineer who's been there six years. Written down, in a language with defined meaning, so that a program can take your ontology and derive consequences from it that you didn't state.
+
+There's a third word that arrived later. In 1997, Willem Borst revised Gruber's definition to read: a formal specification of a shared conceptualization. He added "shared," and that addition matters more than it looks. It means the conceptualization expresses a consensus between several parties, not one person's private view. An ontology that only you agree with is a data model with delusions of grandeur. The point of the artifact is that two systems, or two teams, or two institutions that share nothing else can share the vocabulary.
+
+Gruber makes this concrete with an idea I find clarifying. He describes an ontology as an interface specification. It's the language two agents use to talk to each other about a domain. And here's the part people miss: an agent that supports the interface is not obliged to store its knowledge that way internally. Your inventory system can keep its data in whatever gruesome legacy format it likes. What the ontology fixes is the terms in which it talks to the outside world.
+
+That single idea — ontology as interface rather than as storage — is the architectural move behind almost everything in this series. It's why an ontology can sit above a dozen incompatible systems that will never be rewritten. It's what the Semantic Web tried to do at the scale of the entire web. And it's what Palantir does inside a single company, which we'll get to in lecture nine.
+
+Now let me spend a few minutes on what an ontology is not, because the negative space defines the concept better than the positive space does.
+
+An ontology is not a taxonomy. A taxonomy is a hierarchy of terms — this is a kind of that. Taxonomies are useful and they're one shape an ontology can take, but they're a special case, not the general one. There's a whole W3C standard called SKOS, the Simple Knowledge Organization System, built specifically for representing thesauri, classification schemes, and subject headings as concepts with broader and narrower links. And SKOS is scrupulous about this: it explicitly distinguishes its concepts from formal ontology classes. A SKOS concept is a term in a vocabulary that librarians agreed on. An OWL class is a set, with formal semantics, and asserting that one class is a subclass of another has logical consequences a machine can compute. Those are different claims. SKOS knows they're different. Many people using SKOS do not.
+
+An ontology is not a database schema, though they overlap. The difference is what happens at the edges. A schema is a constraint: it tells the database what to reject. An ontology is, at least in the formal tradition, a set of premises: it tells a reasoner what to conclude. A schema says a customer must have an address or the insert fails. An ontology says every customer has an address, therefore if you show me a customer, I will conclude there exists an address for them, even if I've never seen it. That difference sounds like hairsplitting. It is not. It's the open-world assumption, and it's the thing most likely to make a database engineer's head hurt the first time they meet it. Lecture six is about that in detail.
+
+And an ontology is not a knowledge graph. This one causes the most trouble right now, because "knowledge graph" is the phrase with commercial momentum. A knowledge graph is a data-shaped commitment: your information is entities and relationships rather than rows and joins. That's a good idea and often the right one. But being graph-shaped doesn't give you formal semantics. There's a documented case in the corpus these lectures are built from: a system called SciGraph loads an ontology-centred biomedical model into a graph database, and the mapping is explicitly and deliberately lossy. It can't round-trip. It drops some structures entirely. It's a useful tool, and it isn't an ontology, and its own documentation says so plainly. Many production knowledge graphs have no ontology in the formal sense at all. That's fine. It's only a problem when someone sells you the graph and bills it as the semantics.
+
+Let me try to draw these distinctions together with a single example.
+
+Imagine you're modelling flights. A taxonomy tells you a widebody aircraft is a kind of aircraft. A schema tells you the departure time column cannot be null. A knowledge graph lets you walk from a flight to its aircraft to its maintenance records to the technician who signed them off, in one traversal, without writing four joins. And an ontology tells you that a flight has exactly one assigned aircraft, that an aircraft assigned to a flight cannot simultaneously be in maintenance, and that if those two facts are ever both asserted, your data is inconsistent — and it tells you that in a form where a program can find the contradiction on its own, at three in the morning, without a human noticing.
+
+That last capability is the whole pitch. Whether it's worth the cost is the argument of the next nine lectures.
+
+One last piece of orientation before I let you go, because I want you to know what you're signing up for.
+
+This series is not a sales pitch. The field has a real history of overclaiming, and there are three serious criticisms of the whole enterprise, made by serious people, that have never been fully answered. We'll spend an entire lecture on them, and I've deliberately put that lecture after the ones that teach you how the machinery works, so that when the criticism arrives you'll have something concrete for it to argue with. The critics are Cory Doctorow, who attacked the incentives; Clay Shirky, who attacked the range of cases where it applies; and Geoffrey Bowker and Susan Leigh Star, who attacked the consequences, and whose criticism is the one I think the technical community still hasn't answered.
+
+There's also a story about ambition. The idea we're studying was once meant to reorganise the entire World Wide Web, and that project largely failed, in ways that are well documented and instructive. The same machinery then quietly succeeded in genomics, in museums, in finance, and in drug regulation, where it's load-bearing infrastructure today. Understanding why it failed in one place and succeeded in the other is, I think, the most useful thing this whole course has to offer.
+
+Before I close, I want to give you an exercise you can do while walking, because this stuff sticks better when you've run it on something you know.
+
+Pick a system you've worked on. Any system. Now answer four questions about it.
+
+What kinds of things does it assume exist? Go table by table, or collection by collection, and name them. Customers. Orders. Sessions. Whatever they are.
+
+Second question. What relations can hold between them, and which relations are conspicuously absent? Every foreign key is a relation you committed to. But look at the absences. Can two customers be related to each other in your model? Can an order relate to another order? If not, you've asserted that those relationships don't matter, and one day somebody will ask about them.
+
+Third question. Which of your categories have fuzzy edges that everyone works around? There's always at least one. A status field with a value called "other" or "pending review" or "legacy," which in practice holds four different situations that nobody wanted to model. That value is where your ontology is lying, and the size of that bucket is a decent measure of how wrong the model is.
+
+Fourth, and this is the sharpest one. If you had to explain your data model to a company you were merging with, what would you have to say out loud that isn't written anywhere? That gap — between what the schema says and what you'd have to explain — is the implicit part of your conceptualization. Making it explicit is, literally, the definition of doing ontology work.
+
+I find that exercise clarifying because it demonstrates the thing I claimed earlier, which is that you cannot avoid having an ontology. You can only choose whether it's inspectable.
+
+There's one more distinction I should draw before the end, because it comes up constantly and it's a source of quiet confusion in organisations.
+
+A data dictionary is not an ontology. A data dictionary is a document that tells a human what a field means. Field CUST_STAT_CD holds the customer status code, values A through F, where A means active. That's genuinely useful and every organisation should have one. But it's prose for people. A machine can't do anything with it except display it. There's no way for a program to work out that an active customer is a kind of customer, or that status codes are mutually exclusive, or that something has gone wrong when a record has two of them.
+
+The move from a data dictionary to an ontology is the move from documentation to specification — from telling a person what you meant to telling a machine what follows. That's what Gruber's word "explicit" is doing. Not "written down." Written down in a form with defined consequences.
+
+And I'll note that most organisations that say they want an ontology actually want three things at once, and don't have language to separate them. They want a shared vocabulary, so two departments stop meaning different things by "active customer." They want machine-checkable consistency, so the contradiction is caught by the build rather than in a board meeting. And they want to reuse someone else's model rather than inventing their own. Those are three different projects with three different costs. A glossary gets you the first. A formal ontology with a reasoner in continuous integration gets you the second. Adopting a published standard gets you the third, and usually costs you the most in negotiation while saving you the most in the long run.
+
+Being able to tell a client which of those three they actually need is, I'd say, most of the practical value of this whole course.
+
+So, the one claim I want you to keep from this lecture.
+
+The word "ontology" names three things: a branch of philosophy, a particular theory of what exists, and a machine-readable file that states, explicitly, what kinds of things a system assumes exist and how they relate. Every piece of software you've ever built already made those assumptions. The only question the third sense poses is whether you wrote them down.
+
+Next time, we go back two thousand years and find out where the word came from, and why the man who put it into circulation would have been appalled by what we've done with it.

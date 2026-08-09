@@ -1,0 +1,103 @@
+Lecture Ten. The Politics of an Installed Ontology, and What Comes Next.
+
+This is the last of ten talks about ontologies. Last time we took apart what Palantir means by the word: object types and link types for the nouns, action types and functions for the verbs, security woven through, and user decisions written back as data. Today, two things. First, what happens when a system like that is installed inside a state institution, which is where lecture eight's criticism stops being academic. Then, where all of this stands now that machines can read.
+
+Start with a research paper, because it does something unusual: it studies a Palantir deployment from the inside.
+
+The paper is by Vasilis Galis and Björn Karlsson at the IT University of Copenhagen, published in 2024 in the journal Information, Communication and Society. It's about POL-INTEL, which is the Danish police's customisation of Palantir's Gotham platform. The researchers interviewed both Palantir engineers and the police officers who use it.
+
+Their opening move is to insist on something I've been circling for nine lectures. They say the concept of ontology here has to be understood in two ways at once, and that the two are interconnected. It carries its usual philosophical burden — a claim about what exists — and it also refers to a centralised concept repository, the computer science sense of how data is structured. Their argument is that in a working system you cannot separate them, because the repository is where the claim about what exists gets enforced.
+
+Their central finding is that the ontology is inherently political. Not politically abused, not politically vulnerable. Political in its construction. They describe it as articulated by an assemblage of data, ideological positions, and economic concerns, translated into the Danish context. And they use a phrase I'd like you to keep: these platforms do not only describe the world, they enact it.
+
+Now, that could stay abstract, so let me give you their example, which is the single most useful illustration in this whole series.
+
+A car. Its record is mirrored into POL-INTEL from the Danish Motor Vehicle registry. In the registry, it's a vehicle — a make, a model, a registration, an owner. Perfectly innocent, and true.
+
+Now it enters the platform. An officer applies filters, selects a date range, looks at a map of incidents. And in that context the car becomes potentially a getaway vehicle.
+
+Nothing about the car changed. No new fact about the world was discovered. The category was produced by the interplay between the platform's concepts and the officer's analytical role. The paper's point is that you cannot pull those apart and say which one made the category — the platform's model, or the officer's filters, or the institutional purpose that made both of them available at that moment.
+
+This is Bowker and Star's torque, from lecture eight, with a licence agreement attached. And it's more consequential than their examples in one specific way. The International Classification of Diseases mainly describes. A police intelligence platform describes and then acts. There are action types. Something happens next. A car flagged as a possible getaway vehicle produces a stop, a conversation, a record.
+
+The paper also documents a second effect worth naming: platformisation redistributes skill. When the platform performs the correlation and the visualisation, the officer's expertise shifts from knowing a neighbourhood to knowing how to query. That's a change in what a police officer is, with consequences for organisational life and for accountability, and nobody voted on it. It arrived with a procurement.
+
+And the authors are careful in a way I want to honour, because it makes the argument stronger rather than weaker. They don't claim the platform is a fraud or that the modelling is technically wrong. They say these platforms integrate, analyse, and visualise data pragmatically — and then they add: pragmatically, not agnostically. The system works. The categories come along with the working.
+
+Now the legal side, because this stopped being a seminar question in February 2023.
+
+Germany's Federal Constitutional Court struck down a Hamburg law permitting automated data analysis by police, along with a similar law in Hesse, and for the first time issued strict guidelines on how tools like Palantir's may be used in policing. The court's language, in the reporting, is that the laws allowed police, with just one click, to create comprehensive profiles of persons. And the court specifically warned about the inclusion of data belonging to bystanders — witnesses, and lawyers.
+
+One of the eleven claimants was a Hamburg defence lawyer named Britta Eder, and her situation shows exactly why the link types matter. Her contact list is full of people the state considers criminals, because she defends them. Anti-fascists. Anti-nuclear campaigners. Members of a banned Kurdish organisation. She's a lawyer doing her job. In a link-based system, she is a heavily connected node in a graph of suspects, and her connection to her own mother is one hop from all of it.
+
+Now hold that next to lecture nine. A link type is the schema definition of a relationship between two object types. Bidirectional. Independently traversable from both sides. That's a technical fact about a data model, and it's also the thing that puts a defence lawyer inside an investigation. Whoever decided that "appears in the contacts of" would be a link type made a decision with constitutional consequences, and I would guess they made it in an afternoon.
+
+So here is the review I'd want run on any operational ontology, drawn from all of this. It's four questions.
+
+Which object and link types create legal or ethical exposure? Not which are technically difficult. Which ones, once traversable, put people in a graph they didn't choose to be in.
+
+Whose data enters as a by-product of proximity rather than of suspicion or consent? That's the bystander problem, and it's structural, not accidental — a graph that captures relationships captures the relationships of the innocent by construction.
+
+When a real case doesn't fit a category, who bears the cost? That's Bowker and Star's question, and it's the one that has no technical answer.
+
+And can the audit trail reconstruct why a person was surfaced? Not just what action was taken. Which filters, which thresholds inside which function, which link traversal. If the answer is no, then nobody can be held responsible for a decision the system effectively made.
+
+That last one is where the writeback mechanism from lecture nine turns from a feature into an obligation. If every decision becomes data, then the record exists. Whether anyone can read it back into an explanation is a design choice.
+
+Right. Second half. Where does all of this stand now that we have machines that can read?
+
+The obvious challenge is straightforward. Every ontology in this series exists because somebody had to write down what nobody writes down. Lenat's whole argument in lecture four was that common sense can't be learned from text, because the commonsense facts are exactly the ones too obvious to state. Language models appear to have learned an enormous amount of it from text anyway.
+
+So let me separate three questions that get conflated constantly, because they have three different answers.
+
+Question one: can a language model replace an ontology as a store of knowledge? The evidence here is weakest for replacement. There's a paper in the VLDB proceedings by Sun and colleagues that asks directly whether large language models are a good replacement for taxonomies, and tests it empirically rather than arguing about it. The substitution does not hold uniformly, and it degrades outside common, well-represented domains. Which makes sense: the model is strong where the training data is thick, and an ontology is usually built precisely where the data is thin and specialised.
+
+But the deeper problem with replacement isn't accuracy. It's the four properties I mentioned in lecture four. An axiom is inspectable, consistent, attributable, and stable. You can read it, a reasoner can check it against the others, someone signed off on it, and it says the same thing tomorrow. A model's answer has none of those. For a great many uses that doesn't matter. For a drug interaction, a regulatory filing, or a police record, it's the whole game.
+
+Question two: can a model build an ontology? This is where the answer is mixed and improving fast. Maria Keet has argued that generating an ontology from a language model is harder than it looks, because the output has to satisfy logical constraints and domain commitments that a fluent generator has no way to guarantee. And the tooling in this field bears that out with specific numbers. Direct all-pairs matching with a model is quadratic and practical only up to roughly two hundred concepts. Retrieval-augmented approaches narrow the candidates and work better in specialised domains. Thresholds are dataset-specific and don't transfer. Hallucination and inconsistency survive good prompting, so labels and relationships still need validating against held-out data and classical baselines.
+
+The pattern that keeps emerging is a division of labour, and it's a sensible one. Models are good at proposing candidates from text. Reasoners and constraint languages are good at rejecting the proposals that don't hold. Generate and verify, where the verifier is a program with formal semantics.
+
+The best implementation of that pattern in this corpus is the ELOT tooling, and it's worth describing because it's a template. A model can inspect resources, search labels, lint, run queries, invoke consistency and explanation checks, mint identifiers under project policy, and edit the source. And the mutation surface is deliberately guarded: writes are project-scoped, disabled by default, confirmation-gated, automatically linted and parsed, and rolled back if revalidation fails. Its documentation is honest about what that guarantees — parsability, not semantic consistency, so a separate consistency run is still required.
+
+Question three: can a model use an ontology? Here the answer is strongest, and it's where lecture nine ended. An agent that can only invoke named actions with typed parameters, validation rules, permission checks, and audit records is a governable system. One with raw data access is not. The ontology becomes the interface through which a model is allowed to touch the world, which is Gruber's 1993 definition arriving somewhere he could not have predicted.
+
+There's a fourth question hiding behind those three, and it's the one I find most interesting, so let me put it on the table.
+
+If a language model can answer questions about a domain without an ontology, what exactly was the ontology for?
+
+And I think the honest answer is that it was never only for answering questions. Go back to lecture four. The word entered computer science through a programme about sharing, not about reasoning. The artifact exists so that two parties who share nothing else can agree on what a term means, and can check that they're using it consistently.
+
+A language model does not solve that problem. It can tell you what "active customer" usually means. It cannot make your finance department and your sales department agree on what it means here, and it cannot hold them to the agreement afterwards. That's a governance function, and it needs an artifact that people can point at, argue about, sign off, version, and cite. The model is not that artifact and cannot be, because there's no version of it that two departments both accepted.
+
+So my reading is that the question-answering use of ontologies is the part most exposed to substitution, and the agreement-and-audit use is the part that isn't exposed at all. Which happens to be the original use.
+
+There's a practical pattern emerging from this that's worth naming, because you'll see it under several marketing labels.
+
+The pattern is retrieval grounded in structure. Rather than handing a model a pile of documents and hoping, you give it a graph — entities, relations, and the constraints on them — and let it traverse. There's published work on ontology-grounded retrieval that argues the structure improves both accuracy and the ability to explain where an answer came from. The second part is the important one. A retrieval system that can say "this answer came from these three linked records" is auditable. One that says "this answer came from a similarity score over an embedding" is not, in any sense a regulator would accept.
+
+And there's a related shift in what people build the graph for. Five years ago you built a knowledge graph so that analysts could query it. Now a substantial fraction of graph projects exist so that a model has something reliable to stand on. The consumer changed, and the requirements changed with it — identifiers and provenance matter more, elaborate inference matters less, and coverage matters enormously, because a model will confidently improvise over any gap in the graph rather than reporting that it found nothing.
+
+I should also say something about the failure mode I expect to become common, because it's the one this series ought to warn you about.
+
+It goes like this. A team uses a model to generate an ontology from their documentation. It looks superb. Hundreds of classes, sensible hierarchy, plausible relations, generated in an afternoon rather than a year. It parses. It lints. Everyone is delighted.
+
+And nothing in that process asked whether the distinctions are the ones the organisation actually needs, whether two departments agree with them, or whether anyone will maintain them. The model produced a plausible conceptualization, which is exactly what it's good at. What it could not produce is a shared one, because sharing is a social fact, not a text-generation problem. Borst added the word "shared" to the definition in 1997 for a reason, and a generated ontology fails that clause by construction.
+
+The correct use of the same capability is narrower and genuinely valuable: use the model to draft candidates, then run them through the humans who have to live with them and the reasoner that has to check them. Generate and verify. The verification is the part that cannot be automated away, and treating the draft as the deliverable is how you get four thousand classes nobody agreed to.
+
+One last historical note before the verdict, because I think it puts the current moment in proportion.
+
+This field has been through this before. Expert systems were going to encode professional knowledge, and they hit the acquisition bottleneck. Cyc was going to reach critical mass and start reading, and it didn't. The Semantic Web was going to make the whole web machine-readable, and the economics said no. Each time, the specific promise failed and a durable capability survived — inference engines, microtheories and modularity, and a standards stack that quietly runs biology and finance.
+
+I'd expect the same shape again. The strong claim, that models make explicit knowledge representation unnecessary, will not survive contact with any domain where being wrong is expensive. What will survive is a change in cost: the expensive part of ontology work used to be extraction and drafting, and that part is getting cheap fast. The expensive part is now, and always was, agreement.
+
+So let me finish with a verdict, since that's what a last lecture owes you.
+
+Build one when three things hold together. When the domain is bounded and somebody is accountable for what the terms mean. When wrong answers are expensive enough to justify auditability — meaning regulation, safety, money, or law. And when more than one system or institution has to agree, because that's the problem the artifact was invented to solve and the one it still solves better than anything else.
+
+Don't build one when the domain is unbounded and nobody is paid to curate it. When the incentive audit from lecture eight comes back badly, because the people entering the data gain nothing from accuracy. When a search index would answer the actual questions. Or when what you want is a graph database, in which case build a graph database and don't dress it in a word that promises semantics you aren't implementing.
+
+And whatever you build, know which sense of the word you're using. That's what these ten lectures have really been about. A branch of philosophy that asked what exists. A seventeenth-century coinage that made it a science. Quine's move that turned it into a property of theories. Gruber's definition that turned it into an interface between programs. A stack of standards built for a web of strangers that largely didn't arrive. And an operational layer inside a company that decides who gets stopped on a Tuesday.
+
+The word travelled a long way, and it kept its old authority the whole distance. Categories in a live system don't just describe an organisation. They decide what it can see, and what it can do about it.

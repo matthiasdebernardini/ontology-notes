@@ -1,0 +1,113 @@
+Lecture Seven. Building One for Real.
+
+This is the seventh of ten talks about ontologies. We've done the history, the vision, and the machinery. Today is practice. If you were handed a real project on Monday, what would you actually do, in what order, and where would it go wrong?
+
+I'll organise this around the sequence of decisions, because the order matters more than any individual choice.
+
+Decision one, and it comes before you open an editor: write the competency questions.
+
+A competency question is a question the finished ontology must be able to answer, written in plain language, before any modelling starts. Which suppliers ship components that appear in products currently under recall? Which nurses on shift tonight are certified for this procedure? Which of our funds hold instruments exposed to this counterparty at more than one remove?
+
+Write twenty of them. Get the people who'll use the system to write them, not the modellers. Then keep them, because they're your acceptance tests. When somebody proposes a new class, the question is which competency question needs it. If none does, it doesn't go in.
+
+This is Quine's criterion from lecture three, run in reverse. He gave us a way to read commitments off a theory. Competency questions run the other way: start from the questions, derive the commitments they require, build a model with exactly those. It's the single most effective control on scope in this discipline, and skipping it is the most common cause of the failure mode we'll come to at the end.
+
+Decision two: how many layers, and which foundation.
+
+The standard architecture is three layers. At the top, an upper ontology giving domain-neutral categories. In the middle, a mid-level ontology with reusable notions. At the bottom, your domain.
+
+BFO, the Basic Formal Ontology, is the most widely adopted upper ontology, and its defining trait is what it refuses to contain. It deliberately excludes physical, chemical, biological, and every other specialised scientific term. It gives you the top-level distinctions — things that persist versus things that happen, independent things versus things that depend on a bearer — and nothing else. Over five hundred and fifty projects use it beneath their own models.
+
+Below that sits a mid-level layer. The Common Core Ontologies are the clearest example: agents, events, measurements, facilities, information entities. Things every domain needs and no domain owns.
+
+Other foundations make different bets, and the differences are real. DOLCE's official release is a first-order logic axiomatisation, which means it commits harder and computes less easily. Gist aims at a small enterprise-oriented core with extensive disjointness declarations at the top. gUFO is a lightweight OWL 2 DL implementation of a selected subset of the Unified Foundational Ontology. Choosing among them isn't a matter of quality. It's a matter of which commitments you want to inherit, and you will inherit them, because everything you build sits underneath them.
+
+There's a real argument, incidentally, for using no upper ontology at all on a small bounded project. The cost of an upper ontology is that everyone on the team must learn its distinctions, and those distinctions are genuinely subtle. If your model has forty classes and one consuming system, that cost may exceed the benefit. The benefit arrives when you need to align with somebody else's model, which is exactly when it's too late to add one.
+
+Decision three: reuse before invention.
+
+The discipline here has a slogan worth repeating. Reuse an existing term, extend an existing ontology, and only then mint something new. The Digital Buildings ontology from Google states this as explicit guidance: reuse existing types before proposing validated extensions. The Common Core Ontologies tell adopters to publish domain extensions rather than expanding the common core indefinitely.
+
+To reuse, you have to find things, and there are catalogues. BioPortal for biomedical ontologies, with browsing, annotation, recommendation, and mappings. Linked Open Vocabularies, which catalogues vocabularies and individual terms. BARTOC, which spans terminologies and registries broadly. The OBO Foundry, which pairs a catalogue of biological ontologies with a set of community principles. DBpedia Archivo, which automatically discovers ontologies on the web, keeps persistent snapshots, and rates them on retrievability, licensing, and consistency.
+
+And now the caution that every one of those catalogues states about itself, and which people ignore anyway: inclusion is not endorsement. The OBO Foundry's homepage does not certify that every listed ontology satisfies every principle. OntologyDesignPatterns dot org says explicitly that presence in the catalogue is not certification. Archivo's star ratings are described by its own authors as minimum-viability signals rather than a quality ranking. Curated lists warn that they contain abandoned, stalled, and incomplete entries. Finding an ontology in a catalogue tells you it exists. It tells you nothing about whether it's maintained, whether anyone else uses it, or whether it will still resolve in three years.
+
+Decision four: identifiers and labels, and this is where projects acquire scars.
+
+The rule that matters: identifiers should be opaque and stable, labels should carry the human-readable meaning. If you mint an identifier that spells out what the term means, and then the meaning is refined, you have a permanent lie embedded in a URI that other people have already cited.
+
+The literate ontology tooling documents the specific traps: numeric counters that produce identifiers which aren't valid XML names, and slug schemes that lose information because two different labels collapse to the same slug. Both are recoverable on day one and unrecoverable on day one thousand. Decide your identifier policy before the first commit, write it down, and enforce it in the build.
+
+Decision five: which editor, and this is less consequential than teams believe.
+
+Protégé is the general-purpose default. Desktop Protégé does local OWL 2 modelling, reasoning, and querying, with a plug-in ecosystem, and WebProtégé does collaborative editing in a browser. Its DL Query tab lets you search a classified ontology using Manchester syntax class expressions, which is the fastest way to check whether your model means what you think.
+
+The alternatives serve genuinely different people. Eddy uses a visual language called Graphol with design-time validation. Fluent Editor uses controlled natural language, so domain experts author sentences rather than axioms. OWLGrEd does whole-ontology graphical editing. VocBench handles collaborative multilingual work across OWL, SKOS, and lexical resources, which matters enormously in public-sector and cultural-heritage settings.
+
+And there's a text-first tradition worth knowing about, because it fits how software teams already work. ELOT makes a single document the formal source, the documentation, the hierarchy, the query notebook, and the diagram workspace at once. Tawny-OWL constructs ontologies programmatically in a Clojure library. LinkML lets you author a schema once in YAML and generate SHACL, ShEx, OWL, JSON Schema, SQL, and language types from it, which is the pragmatic choice when your ontology needs to reach systems that will never speak RDF.
+
+Decision six: automate the lifecycle, because this is what separates a project that survives from one that doesn't.
+
+ROBOT is the workhorse. Conversion, extraction of modules, merging, querying, reasoning, repair, reporting, templating, profile validation, and verification, all from the command line. Which means all of it in continuous integration. Every pull request classifies the ontology, checks the profile, runs the report, and fails if consistency broke. Treat your ontology like source code and it behaves like source code.
+
+WIDOCO generates standards-aware documentation with provenance, visualisations, evaluation, and version changelogs. OnToology watches a repository and proposes generated documentation and diagrams when things change. And you'll want your competency questions encoded as SPARQL queries in the test suite, so a change that breaks an answer fails the build rather than surfacing in a meeting six weeks later.
+
+Decision seven: expect alignment, and budget for it.
+
+We established in lecture three why this is permanent: different purposes produce different commitments, so two correct models of the same domain will differ. When you need to exchange data, somebody writes the mapping.
+
+There's mature tooling. AgreementMakerLight focuses on efficient automated matching. LogMap combines large-scale matching with reasoning and inconsistency repair, which matters because naively merging two consistent ontologies routinely produces an inconsistent one. OntoAligner offers a modular pipeline spanning classical, retrieval-based, embedding-based, and language-model matchers, with ensembles. The Alignment API gives you a shareable format so correspondences are artifacts rather than scripts. And there's an annual evaluation initiative that benchmarks matchers on standard tasks, which is the honest place to check claims.
+
+Two operational cautions from that tooling, both documented. Direct all-pairs matching with a language model is quadratic, and the documentation puts the practical ceiling at roughly two hundred concepts, which is small. And matching thresholds tend to be dataset-specific, so a configuration tuned on one pair of ontologies will not transfer.
+
+Now, three failure modes, and then I'll stop.
+
+The first is scope creep, and it's the most common. It starts reasonably. Someone notices the model doesn't cover a nearby case, so they extend it. Then another. Two years later you have four thousand classes, nobody understands the whole thing, classification takes forty minutes, and no consuming system uses more than eighty terms. The discipline that prevents this is the competency questions, which is why they're decision one. BFO's refusal to include scientific terms and the Common Core's instruction to publish extensions rather than grow the core are both institutional versions of the same defence.
+
+The second is version and profile drift. Different versions of the OWL API and Protégé can produce spurious differences in files, so your diff shows a thousand changed lines and one real edit. HermiT documents specific compatibility boundaries with particular API versions. Gist had a major release that broke compatibility and required migrations. Pin your tool versions in the build, normalise serialisation before diffing, and treat an upgrade as a change requiring review.
+
+The third is confusing syntactic success with semantic correctness. Your file parses. It passes the linter. That tells you nothing about whether it's consistent, and nothing about whether it means what you intended. Consistency is a separate check that must run. This matters especially when a language model is proposing edits, and the ELOT tooling shows the right pattern: writes are project-scoped, disabled by default, confirmation-gated, automatically linted and parsed, and rolled back if revalidation fails — and its documentation still states plainly that those automatic checks establish parsability, not semantic consistency, so a separate consistency run is required.
+
+Let me finish with the thing this lecture has been circling.
+
+The technical work in an ontology project is the easy half. The hard half is governance. Who decides what a term means? What happens when two departments disagree? What's the deprecation policy when a term turns out to be wrong, given that other people's data already cites it? Who's responsible in five years? How is a change proposed, reviewed, and released?
+
+The successful ontologies in this field all have answers to those questions, and the answers are institutional rather than technical. The Gene Ontology has a consortium with funding and curators. The OBO Foundry has published principles and a review process. CIDOC CRM has a standards committee. FIBO has an industry body. That's not overhead attached to the real work. That is the real work, and the file is what it produces.
+
+Let me add three practical things that don't fit the decision sequence but that you'll hit in the first six months.
+
+The first is versioning, and it's harder than versioning code for one specific reason. When you release version two of a library, consumers upgrade when they choose, and old versions keep working. When you release version two of an ontology, other people's data already contains your identifiers. Those identifiers are in published datasets, in papers, in databases you've never heard of. You cannot recall them.
+
+So the deprecation policy is the important document, and it needs to be written before the first release, not after the first mistake. The convention that's emerged in the biomedical world is worth copying: identifiers are never reused and never deleted. A term that turns out to be wrong is marked as obsolete, keeps its identifier forever, gains an explanation of why it was obsoleted, and where possible points to its replacement. So a dataset from 2011 that cites an obsolete term still resolves, and a tool can tell the user that the annotation is out of date and what to use instead.
+
+Compare that to the alternative, which is deleting the term. Now somebody's ten-year-old dataset references an identifier that returns nothing, and there's no way to find out whether the term was renamed, split, merged, or simply wrong. That's an unrecoverable loss of meaning, and it happens constantly in projects that treat an ontology like an internal schema.
+
+OWL supports version identifiers directly — a version identifier alongside the ontology identifier — and you should use them, and your release process should stamp them automatically, because a file that doesn't say which version it is will end up in four places at three versions.
+
+The second practical matter is documentation, and specifically the gap between the file and what a human needs.
+
+An ontology is not self-documenting, whatever anyone tells you. A class with a good label and an annotation that says "a customer" is documented in the same sense that a variable called data is documented. What consumers need is the definition — what makes something a member of this class and not the adjacent one — plus the edge cases, plus an example, plus a note on what it is deliberately not.
+
+That last one, the negative definition, is the one people skip and the one that saves the most time. If your Order class does not cover cancelled orders, say so, in the annotation, in the file, where the person integrating at midnight will read it. The alternative is that they find out by writing a query that gives a number that's four percent wrong in a way nobody notices for a year.
+
+WIDOCO will generate the documentation site with provenance, diagrams, and a changelog between versions. It cannot generate the definitions. Somebody has to write those, and the discipline of writing a genuine definition is also the best test of whether the class should exist, because a class you can't define crisply is a class that will accumulate junk.
+
+The third practical matter is what I'd call the honest project timeline, because expectations here are usually wrong in a specific direction.
+
+Month one is not modelling. It's competency questions and finding out that two departments have been using the same word differently for eleven years, which is genuinely valuable and will feel like nothing is being built. Month two is choosing what to reuse and discovering that the promising standard you found is unmaintained, or has a licence your legal team won't accept, or has three hundred classes where you need eight. Month three is the first small model that answers three of your twenty competency questions end to end, and this is the milestone that matters, because it proves the pipeline from source data through the model to an answer.
+
+Anything that doesn't reach that end-to-end answer by month three is in trouble, and the trouble is usually that the team is modelling comprehensively before proving anything works. Grow it in layers. Get three questions answered against real data, then add the fourth. The alternative, which I have seen and which lecture four should have warned you about, is eighteen months of beautiful modelling that no system ever consumes.
+
+And a note on staffing, since it determines the outcome more than tool choice does. You need three roles and they are rarely the same person. Someone who knows the domain deeply enough to say when a distinction is real. Someone who knows the formalism well enough to say when a modelling choice will cause trouble in two years. And someone with the institutional standing to make a ruling when two departments disagree about what a word means, and make it stick. The third role is the one that gets left out of project plans, and it's the one that decides whether the thing ships.
+
+One final warning, and it's about a failure I've seen enough to name.
+
+Watch for the ontology that becomes an end in itself. The signs are recognisable. The team spends more time on the upper ontology than on the domain. Debates about whether something is a continuant or an occurrent run for weeks with no consuming system waiting on the answer. The class count grows faster than the query count. And when you ask which competency question a new branch serves, you get an answer about completeness rather than about a question somebody asked.
+
+Completeness is not a goal. It's the failure mode that Cyc's forty years should have inoculated this field against, and it hasn't, because building a beautiful model of the world is genuinely more enjoyable than answering three tedious questions about shipments. The competency questions exist to protect you from your own good taste.
+
+So, the claim to keep.
+
+Write the competency questions first and use them as acceptance tests. Reuse before inventing, and don't mistake catalogue inclusion for endorsement. Put the ontology in continuous integration with ROBOT so classification is a build step. Budget for alignment because it's permanent. And understand that you're setting up a governance body that happens to produce a file, because every ontology that survived did that, and most that didn't, didn't.
+
+Next time, the case against everything I've just told you.

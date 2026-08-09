@@ -1,0 +1,24 @@
+[book]
+title = "Ontologies"
+description = "A ten-lecture course and a searchable knowledge base on ontologies: what they are, where the idea came from, the criticism, and how Palantir uses the word."
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/matthiasdebernardini/ontology-notes"
+no-section-label = true
+
+[output.html.search]
+enable = true
+limit-results = 30
+boost-title = 2
+use-boolean-and = true
+
+[output.html.print]
+enable = true

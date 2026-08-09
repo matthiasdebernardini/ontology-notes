@@ -1,0 +1,121 @@
+Lecture Eight. The Criticisms That Landed.
+
+This is the eighth of ten talks about ontologies. For seven lectures I've been explaining how this technology works and how to build with it. Today I'm going to make the case against it, as strongly as I can, using three critics who were right about different things.
+
+I've put this lecture here deliberately. If you hear the criticism before you understand the machinery, it sounds like grumbling. Now that you know what a reasoner does and what a governance body costs, the criticism has something concrete to bite.
+
+Three critics, three layers. Doctorow attacks the incentives. Shirky attacks the range of cases where the approach applies. Bowker and Star attack the consequences. In my judgement the first two have been substantially answered and the third has not.
+
+Start with Cory Doctorow, in 2001, the same year as the Scientific American article and aimed squarely at it. His essay is called "Metacrap," subtitled "putting the torch to seven straw-men of the meta-utopia." His thesis in one sentence: a world of exhaustive, reliable metadata would be a utopia, and it is also, and I quote, "a pipe-dream, founded on self-delusion, nerd hubris and hysterically inflated market opportunities."
+
+He gives seven obstacles. I'll give you all seven, because the list is better than its reputation.
+
+One. People lie. Metadata exists in a competitive world where suppliers compete for wallets and attention. When poisoning the well benefits the poisoner, the water gets toxic fast. His examples are of their time — search results padded with porn links, spam with subject lines reading "Re: the information you requested," press releases with vast lists of empty buzzwords — but the mechanism is permanent. Anyone who has looked at search engine optimisation, or at how sellers title things on a marketplace, has watched this happen in real time.
+
+Two. People are lazy. He's blunt about the asymmetry between people who care about information and everybody else. Your aunt sends email with no subject line. Half the pages on the old web were titled "please title this page." Files on the desktop called UNTITLED dot DOC. His test case is downloading ten random music files and finding at least one with no title, artist, or track information — despite the ripping software having a button that fetches all of it in one click. His conclusion: this laziness is bottomless, and no amount of ease-of-use will end it.
+
+Three. People are stupid, by which he means careless, and his example is the best in the essay. On eBay, every seller has a strong financial incentive to spell their listing correctly, because a misspelled listing never appears in a correctly-spelled search and therefore attracts fewer bids and a lower price. Search eBay for "plam," p-l-a-m, and you would find nine listings for Plam Pilots. You can reliably get a bargain on a Plam Pilot. Money on the table, and people still get it wrong.
+
+Four. Know thyself is impossible. In the meta-utopia everyone weighs their own stuff and accurately reports its properties. People are terrible at this. When Nielsen measured television viewing with paper diaries, the results skewed heavily towards Masterpiece Theatre and Sesame Street. When they replaced the diaries with set-top boxes that recorded what the set was actually tuned to, the picture was rather different. People are poor observers of their own behaviour, and asking them to describe it accurately in a form is asking for fiction.
+
+Five. Schemas aren't neutral. This is where the essay turns from mockery to argument, and it's the part that has aged best. A manufacturer of small, efficient washing machines will draw a hierarchy that leads with energy consumption, water consumption, and size. A manufacturer of glitzy feature-laden machines will lead with colour, size, and programmability. Both are honest. Neither is neutral. Any hierarchy of ideas asserts that some axes matter more than others, and the belief that competing interests will reach easy agreement on a common vocabulary ignores what's at stake in the ranking.
+
+Six. Metrics influence results. Agreeing on a yardstick privileges whatever scores well on it, regardless of overall merit. Intelligence tests privilege people who are good at intelligence tests. His sharpest example: Nielsen couldn't generate ratings for three-minute programmes, so MTV couldn't demonstrate the value of advertising against music videos, so MTV stopped showing music videos. A measurement system reached back and changed the thing it was measuring.
+
+Seven. There's more than one way to describe something. "No, I'm not watching cartoons, it's cultural anthropology." "This isn't smut, it's art." Reasonable people can disagree forever about how to describe the same object, and requiring everyone to use one vocabulary, in his phrase, denudes the cognitive landscape.
+
+Now, what does Doctorow actually conclude? Not that metadata is worthless. He says so explicitly. He endorses implicit metadata, and his example is Google, which at the time was winning by exploiting the link structure of the web — data produced as a by-product of what people did, not as a declaration of what they claimed.
+
+That distinction is the durable core of the whole essay. Observed signal is reliable in a way declared signal is not, because nobody games a behaviour they didn't know was being counted. Every one of Doctorow's first four obstacles is an argument against asking people to declare things. None of them applies to signal you observe.
+
+So the constructive form of Doctorow's critique is an incentive audit, and it's two questions long. Who enters this data? And what do they gain from entering it accurately, compared with what they gain from entering it in a way that flatters them? If the answer to the second question is "nothing" or "less," your ontology will be populated with garbage, no matter how good the model is.
+
+Now Clay Shirky, 2005, in a talk called "Ontology Is Overrated."
+
+Shirky is more often cited than read, and what he actually says is narrower and better than the version that circulates. His target is not classification. It's ontological classification specifically, which he defines as organising entities by their essences and possible relations, and — this is the key part — designing categories in advance to cover cases that haven't arrived yet. A library catalogue, he notes, assumes that a new book's logical place already exists in the system before the book was written.
+
+He starts by conceding the best case. The periodic table gets his vote for best classification ever. Organise elements by proton count and you get enormous descriptive and predictive value, and because you're organising actual things, it's about as close to essence as physical reality permits.
+
+And then he finds the flaw, which I love. Look at the noble gases. Helium is no more essentially a gas than mercury is essentially a liquid. Helium is a gas at most temperatures, and the chemists who classified it couldn't get it cold enough to see otherwise. So they took a property that holds at room temperature, which is unrelated to essence, and put it at the centre of the category. And it's stayed there ever since, a frozen accident everyone has got used to.
+
+His point: if a near-perfect scheme over physical essence still contains context errors, what chance does a domain with no essence at all have?
+
+Then the libraries. Dewey's religion category, the 200s: natural theology, Bible, Christian theology, Christian moral theology, Christian orders, Christian social theology, Christian church history, Christian sects, and then 290, "other religions." Nine slots for one religion, one slot for the rest.
+
+That one's easy to laugh off as period bias. The Library of Congress example is harder, and it's the one that does the work. Top-level categories under History: DA Great Britain, DB Austria, DC France, DD Germany, DF Greece, DG Italy — and, at the same level, co-equal, DS Asia and DT Africa. So Austria and Asia are peers.
+
+Shirky asks what's being optimised, and rules out the obvious answers. It isn't geography. It isn't population. It isn't economic output. The Library of Congress employs people who think about categorisation all day.
+
+What's being optimised is the number of books on the shelf.
+
+And then the line that carries the whole essay: the essence of a book isn't the ideas it contains. The essence of a book is "book." Thinking library catalogues exist to organise concepts confuses the container for the thing contained. A book can be about several things, but the physical object can only be in one place, so it must be declared to be mainly about one thing, whatever its actual contents.
+
+Which brings the punchline. In the digital world, there is no shelf. The physical constraint that produced hierarchical classification is simply gone.
+
+And here's his parable. Yahoo, faced with organising the web with no physical constraints at all, hired a professional ontologist and built a hierarchy. Go to their Entertainment category and you'll find Books and Literature, marked with an at-sign, which means the category isn't really there. It's a courtesy link. To see those links you have to go where they really are, under Humanities. And when you get to Literature, booksellers aren't really there either, because they're commercial, so they're really in Business.
+
+Given the freedom to put anything anywhere, Yahoo added the shelf back. They couldn't imagine organisation without it, so they reinstated the constraint and then told users which location was real.
+
+Now, Shirky's argument is regularly over-read into "ontologies are useless," and he does not say that. Read the essay carefully and it yields a set of preconditions, and they make a genuinely useful checklist. Formal classification in advance works when the domain is small, bounded, and stable, when the categories have clear edges and things don't sit between them, when expert cataloguers do the work, when those experts are coordinated and authoritative, and when the users are trained and expect the system.
+
+Genomics passes. Museum records pass. Financial instruments pass. Chemical compounds pass. General web content fails every clause. User-generated media fails. And a great many enterprise data projects fail three or four of them while believing they pass all five. Run your project against those five conditions honestly and you'll know whether you're building a Gene Ontology or a Yahoo directory.
+
+Now the third critique, and the one I think is unanswered.
+
+Geoffrey Bowker and Susan Leigh Star, "Sorting Things Out: Classification and Its Consequences," published in 1999. It's not a technical book. It's ethnography, and its claim is that values, policies, and ways of working become embedded in large information systems and get expressed as categories, where they then become invisible.
+
+Their first case is the International Classification of Diseases, which sounds like the most neutral document imaginable. A list of diseases. Their account shows it took decades of negotiation and remains contested. Tropical countries argue that tropical diseases are grossly under-represented relative to rich-world diseases like cancer and heart disease. And there's a detail I find unforgettable: in Japan, where a heart attack is considered a low-status way to die, death certificates often record a stroke instead. Which means international comparisons of cardiac mortality are measuring, in part, a cultural attitude towards dying.
+
+Their central concept is torque. It's what happens when a classification and a person's own account of themselves come apart, and the classification wins.
+
+Their extreme cases make it unmistakable. Tuberculosis patients, entirely dependent on a doctor's diagnosis to know their own status. And race classification under apartheid in South Africa, where people were moved between categories by government declaration, and a reclassification forced changes of residence, of employment, of family. The category there is not a description of a person. It's an instrument applied to one.
+
+Then they do something cleverer, which is to show the same mechanism in an ordinary case with no villain. The Nursing Interventions Classification was an effort to describe what nurses actually do, so it could be standardised and, crucially, billed. Some nurses welcomed it, because work that had been invisible became visible and therefore fundable. Others were dismayed, because now they had to describe what they did in the system's terms, and the system's terms didn't fit every situation. Both reactions were correct. The tension between the standard and the local adaptation needed to make it work in practice runs through the whole book.
+
+And there's the everyday version, which is the one that should worry anyone who builds forms. How often do you face a set of choices where none is right? You hesitate, you pick the closest, you move on. The official record keeps only your final choice. Every trace of the mismatch is gone, and your identity in that system is now the box you settled for.
+
+Their last point is about invisibility. Classifications get black-boxed. They become infrastructure, and infrastructure is by definition the thing you stop noticing. The effort that went into building it, and the arguments and politics that shaped it, disappear from view. What's left looks like a description of how things simply are.
+
+Now, why do I say this critique is unanswered?
+
+Because everything the technical field built answers a different question. Consistency checking, profile validation, alignment, provenance tracking — all of it measures the model against the world. Is the model coherent, does it fit the data, does it agree with that other model. Torque runs the other way. It's the world being measured against the model, and a person losing.
+
+There's no reasoner for that. There's no lint rule. The only mechanism that addresses it is a human process: someone in the room asking, when a real case doesn't fit a category, who bears the cost. If the answer is a person who isn't in the room, then the modelling decision is a policy decision and should be made by people with the authority to make policy.
+
+I'll give the book its fair criticism too. One reviewer notes that it accumulates examples without establishing which characteristics of a classification produce which effects — that it demonstrates the phenomenon without giving you a predictive theory. And it's oddly disconnected from the empirical research on how humans actually categorise. Both fair. Take it as a set of demonstrations that something real is happening, not as an engineering handbook.
+
+There are two more voices I should add, because they attack from inside rather than outside, and insider criticism is usually the more useful kind.
+
+The first is Aaron Swartz, who was a participant in this world rather than a heckler at it — he worked on RDF specifications as a teenager. In an unfinished book published after his death, he says something that reframes the whole argument. He says Doctorow was attacking a straw man. Nobody serious ever expected web metadata to be thoroughly accurate and reliable. A more realistically scoped Semantic Web remained possible.
+
+The problem, in Swartz's view, was elsewhere, and he puts it sharply. It was the formalising mindset of mathematics and the institutional structure of academia, brought to bear on a practical problem. In forums like the W3C, an enormous amount of effort and discussion went into creating standards before there were any applications to standardise. And what emerged from those debates — he calls them Talmudic — was so abstract that almost none of it saw widespread adoption. The exception he names is XML, and he is not kind about it: a scourge on the planet, an offence against working programmers, which pushed out sensible formats like JSON in favour of overcomplicated hairballs with no basis in reality.
+
+Now, whatever you think of the tone, the structural diagnosis is important and it's different from Doctorow's. Doctorow says the plan was impossible. Swartz says the plan was possible and the process was wrong. Standards were built before applications, by people whose professional incentives rewarded generality and rigour rather than adoption. And the original web, by contrast, succeeded because its standards were trivially easy and eagerly adopted.
+
+That's a criticism about how technical communities work, and it generalises well beyond this field. Any time you see a specification effort running for years with no shipping consumer, that's the pattern.
+
+The second voice I owe you is the rebuttal, because I've given you three critics and no defence, and that's not a fair hearing.
+
+Shirky wrote a companion piece arguing that the Semantic Web's reliance on syllogistic reasoning reflected a mistaken worldview — that the world does not decompose into clean premises from which valid conclusions follow, and that systems built on that assumption will produce confident nonsense. The firm Semantic Arts published a direct reply, and the substance of the disagreement is worth stating because it's still live.
+
+The reply's argument, in essence: Shirky picks examples where formal inference is silly, and concludes that formal inference is silly. But nobody proposes to derive social truths by syllogism. The proposal is to derive narrow, well-defined consequences within a bounded domain where the premises are curated by people who know the domain. If your ontology says every antibiotic in this class contraindicates with that drug, and the patient record says this patient is on that drug, the inference is neither profound nor controversial. It's a check that a human might miss at three in the morning, and it fires correctly a hundred thousand times a year.
+
+I think both sides are right about different things, which is usually the case with a long-running argument. Shirky is right that inference over uncurated, contested, socially-constructed categories produces garbage with a confident face. The reply is right that inference over curated, bounded, expert-maintained categories is quietly load-bearing in several industries. Notice that the dividing line is the same one Shirky's own preconditions draw. The two positions agree more than either admits.
+
+Now let me try to be useful rather than balanced, and say what I think each critique actually establishes, since that's the thing a listener needs.
+
+Doctorow establishes that declared metadata is unreliable in proportion to the incentive to misdeclare, and that no interface improvement fixes it. What he does not establish is that curated metadata fails, because in every domain where this technology succeeded, the metadata is produced by people whose job is producing it and whose professional reputation depends on getting it right. A gene ontology curator is not filling in a form. Doctorow's obstacles are about the general public, and the technology stopped targeting the general public around 2008.
+
+Shirky establishes that a priori categorisation is the wrong tool for unbounded corpora with uncoordinated contributors, and his five preconditions are a genuinely useful filter. What he does not establish, and does not claim, is that it's the wrong tool everywhere. His own periodic table example concedes the point.
+
+Bowker and Star establish that categories act on the people they classify, and that this is invisible by design because infrastructure is what you stop noticing. What they do not offer is a way to tell in advance which categories will torque and which won't, which is the thing an engineer would want. Their contribution is to make you look, and looking turns out to be most of it.
+
+And there's a fourth criticism I'd add, which nobody in this list makes and which I think is the most common practical failure. It's the cost of being wrong slowly.
+
+A database schema that's wrong causes an outage. Someone notices. An ontology that's wrong causes nothing at all for two years, because the model still loads, the reasoner still classifies, the queries still return rows. What happens is that every downstream decision is quietly slightly off, and every new integration inherits the error and encodes it further, and by the time somebody notices, the wrong distinction is in four systems and two published datasets and a regulator's filing. There's no alarm for a category that's subtly incorrect. That's an argument for competency questions with real expected answers, checked in the build, because they're the only mechanism that turns a semantic error into a failing test.
+
+So, the claim to keep from this lecture.
+
+Doctorow attacked the incentives and was right, and the answer is to prefer observed signal over declared signal and to audit who benefits from lying. Shirky attacked the applicability and was right, and the answer is his five preconditions, honestly applied. Bowker and Star attacked the consequences and were right, and there is no technical answer, only the discipline of asking who pays when a real case doesn't fit.
+
+Next time, the company that took this word, kept about half of it, and built the most commercially successful thing anyone has ever called an ontology.

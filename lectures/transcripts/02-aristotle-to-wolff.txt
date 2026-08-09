@@ -1,0 +1,91 @@
+Lecture Two. From Aristotle to Wolff: Where the Word Came From.
+
+This is the second of ten talks about ontologies. Last time we separated three senses of the word: the philosophical discipline, a particular theory of what exists, and the machine-readable file. Today we trace where the word itself came from, over about two thousand three hundred years, and we finish with a question worth carrying through the rest of the series: when computer science borrowed this word, what came with it, and what got quietly left behind.
+
+Let me warn you at the start that this lecture has more dates in it than the others. I'll repeat the ones that matter.
+
+Start with Aristotle, in the fourth century before Christ. Aristotle does not use the word "ontology." Nobody does for another two millennia. What Aristotle does is identify the subject. In Book Four of the Metaphysics he describes a discipline he calls first philosophy, and he distinguishes it from every other science by the way it takes its object.
+
+Here's the distinction, and it's cleaner than most people give it credit for. Every particular science studies things under a restriction. Physics studies things insofar as they're subject to motion. Medicine studies bodies insofar as they're healthy or sick. Each one cuts a slice out of reality and works on the slice. First philosophy takes no slice. It studies things insofar as they are — being qua being, in the standard translation. It asks what's true of everything that exists, purely because it exists.
+
+That sounds impossibly abstract until you notice that Aristotle immediately gets concrete. He wants to know: what are the fundamental kinds? What is it for something to be a substance rather than a property? Is a horse the same kind of thing as the colour of the horse, or the horse's height, or the horse's running? His answer is the Categories, a list of the basic ways a thing can be said to be: substance, quantity, quality, relation, place, time, position, state, action, and being acted upon.
+
+Now, why should an engineer care about a list from the fourth century BC? Because that's an upper ontology. That's exactly the move that the Basic Formal Ontology makes today. BFO — the Basic Formal Ontology — is a small top-level ontology that deliberately excludes every specialised scientific term, and its whole job is to give you domain-neutral categories: is this thing a continuant, something that persists through time, or an occurrent, something that happens? Is it independent, or does it depend on a bearer? Aristotle is asking the same questions with the same motivation, which is that if you don't fix the top-level kinds, every domain will invent its own and they'll never fit together.
+
+So the subject is ancient. The word is not.
+
+Aristotle's commentators, all through the Middle Ages and into the early modern period, recognised that being as such was a distinct object of study. Thomas Aquinas knew it. So did the sixteenth-century Schoolmen. Two of them, Francisco Suárez and Pedro Fonseca, pushed hardest on the very general and abstract kinds of beings. But none of them thought a new word was needed. They said metaphysics, and that was that.
+
+Then, at the start of the seventeenth century, somebody coined it.
+
+The first appearance we have is 1606. A German philosopher named Jacob Lorhard published a work called Ogdoas Scholastica, and in it the Latin word ontologia appears — the science of being. Nineteen years is not much time in the history of philosophy, but note the date: 1606, Lorhard.
+
+Seven years later, in 1613, Rudolf Goclenius — you'll also see his German name, Göckel — printed the word in his Lexicon philosophicum, a philosophical dictionary. That's the instance most reference works cite as the first, and it's the one you'll find in older histories.
+
+There's a persistent misattribution worth knowing about, because it tells you something about how history gets written. A whole line of respectable historians — Eucken, Gilson, Pichler, Wundt, Heimsoeth — name Johann Clauberg as the first philosopher to use the term. He wasn't. He came later. The error propagated because each historian was reading the previous one. It's a small thing, but if you ever wondered whether the history of ideas is transmitted by careful checking or by copying, there's your answer.
+
+Now to the man who actually made the word stick.
+
+Christian Wolff, the German rationalist, published Philosophia prima sive ontologia in 1730. First Philosophy, or Ontology. That's the book that put the word into general circulation, and Wolff's definition is the one worth memorising because it's the high-water mark of the ambition: ontology is scientia entis in genere, quatenus ens est. The science of being in general, insofar as it is being.
+
+Two things about Wolff's programme matter for us.
+
+The first is his method. Wolff proceeds demonstratively — rationally, deductively, from first principles, in the manner of a geometry textbook. Definitions, axioms, theorems. This is ontology as a proof system. And that ambition, that you could derive the structure of reality by deduction, is exactly the ambition that description logic and OWL inherit at the level of technique while abandoning at the level of scope. A modern reasoner does deduce theorems from axioms. It just doesn't claim the axioms are true of reality. It claims they're true of your model, which is a much smaller and much more defensible claim.
+
+The second thing is Wolff's organisational scheme, and this one is a direct ancestor of how ontology repositories are laid out today. Wolff divided metaphysics into two parts. General metaphysics, which is ontology, deals with being as such — the categories that apply to anything whatsoever. Special metaphysics deals with particular kinds of being: the soul, the world, God. General first, then special.
+
+Look at what that maps onto. General metaphysics is the upper ontology: BFO, or DOLCE, or the Suggested Upper Merged Ontology. Special metaphysics is the domain ontology: the Gene Ontology for gene function, CIDOC CRM for cultural heritage, the Financial Industry Business Ontology for finance. And between them, modern practice has inserted a layer Wolff didn't have — the mid-level ontology, like the Common Core Ontologies, which supply reusable notions such as agents, events, measurements, and facilities that are too specific for the top and too general for any one domain.
+
+That three-layer structure, upper, mid, domain, is the standard architecture of ontology engineering, and it's Wolff's distinction with an extra floor.
+
+So we have the word, we have the ambition, and we have the architecture. Now we get the demolition.
+
+Immanuel Kant went after general metaphysics directly. His argument, compressed brutally, is that Wolff's project confuses the structure of our thinking with the structure of reality. The categories Wolff derives are the conditions under which we can have experience at all. They tell you how a mind must organise a world in order to have a world. They don't tell you what the world is like independent of any mind. Kant's word for the attempt to derive substantive truths about reality from pure concepts is "dogmatic," and he meant it as a diagnosis.
+
+I want to be careful here, because this is where the lecture could turn into a philosophy course. But Kant's objection has a direct engineering echo, and I think it's the most useful thing in this lecture.
+
+Kant's charge is that Wolff mistook a feature of the modelling apparatus for a feature of the modelled world. That is precisely the failure mode of ontology engineering. You build a model of shipping. It has a class called Delay. You get very good at reasoning about delays. And after two years, nobody in the organisation can think about a late shipment except as an instance of Delay with a cause property, because that's the only shape the system will accept. The category has stopped describing your operations and started constraining them. That's Kant's objection, arriving on a Tuesday, in a stand-up meeting. We'll see it again in lecture eight under a different name, when Bowker and Star call it torque, and again in lecture ten when a Danish police platform turns a car in a registry into a getaway vehicle.
+
+After Kant, the word survives but changes hands.
+
+In the early twentieth century Edmund Husserl, the founder of phenomenology, picks it up. Husserl calls Wolff's general metaphysics "formal ontology," and he contrasts it with regional or material ontologies — the ontologies of particular domains of being. Note that vocabulary. Formal ontology, and regional ontologies. If you've spent any time in this field you've just heard two phrases you thought were invented by computer scientists in the 1990s. They weren't. Husserl and Meinong argued that the basic categories are discovered by analysing what's given in consciousness. Martin Heidegger took the word in a different direction, arguing that the whole tradition had forgotten to ask what being means, and grounding the question in the analysis of human existence, which he called Dasein.
+
+I mention Heidegger mostly to draw a boundary. Nothing in the Heideggerian line feeds into computer science. If you go looking for the philosophical roots of OWL you'll find Aristotle, the Schoolmen, Leibniz, Wolff, Frege, Russell, Tarski, and Quine. The phenomenological branch is a genuinely different tradition with a genuinely different question, and confusing the two produces a lot of bad writing.
+
+So what actually made the crossing into computing?
+
+Three things came across. The vocabulary came across: ontology, category, formal, upper and regional, the whole lexicon. The architecture came across: general before special, upper before domain. And the deductive method came across: axioms, definitions, and a machine that derives theorems from them, which is what a reasoner is.
+
+One thing did not come across, and this is the point I want you to keep. Wolff's ontology was meant to be the single true account of being, derived by reason, correct for everyone. An engineering ontology is nothing of the kind. It's chosen for a purpose. There are many possible models of the same domain, and the good ones are good relative to a set of questions somebody needs answered. Genesereth and Nilsson said it in the line I quoted last time: a conceptualization is a simplified view of the world that we wish to represent for some purpose. For some purpose. Wolff would have found that sentence unbearable.
+
+And here is where the trouble comes from. The vocabulary still carries Wolff's ambition even though the practice abandoned it. When a vendor says "we have modelled the ontology of your enterprise," the word is doing work that the artifact cannot support. It sounds like a discovery about your business. It is a set of choices about your business, made by people, for reasons, that could have gone otherwise. Every time you hear the word used with a definite article — the ontology, as though there could only be one — a claim of objectivity is being made that nothing in the engineering practice earns.
+
+I've skipped two things in that sprint through the centuries that are worth going back for, because both of them turn up in modern practice wearing different clothes.
+
+The first is Porphyry's tree. Porphyry was a third-century philosopher who wrote an introduction to Aristotle's Categories, and in it he laid out a scheme that got drawn, by later commentators, as a branching diagram. At the top, substance. Substance divides into corporeal and incorporeal. Corporeal substance — body — divides into animate and inanimate. Animate body divides into sensitive and insensitive. Sensitive animate body is animal. Animal divides into rational and irrational. Rational animal is human. And then at the bottom, individuals: Socrates, Plato.
+
+Look at what that is. It's a strict hierarchy, each level split by a distinguishing feature, terminating in individuals. That is a taxonomy with class definitions by necessary and sufficient conditions, drawn in the third century. When you write in OWL that Human is equivalent to Animal and Rational, you are writing a line of Porphyry's tree. Medieval logicians taught this diagram to every student for a thousand years, which is why the hierarchical picture of knowledge feels natural to us. It was drilled into European education before there were universities in the modern sense.
+
+The second thing I skipped is the argument about universals, and this one has a genuinely surprising payoff.
+
+The question is: when we say Socrates is human and Plato is human, is there a thing, humanity, that both of them share? Three answers were on offer. The realists said yes, universals exist independently of the particular things. The conceptualists said universals exist, but only in the mind. And the nominalists said there is nothing but individuals plus the names we give them — "human" is a word we apply to similar things, and there's no further entity.
+
+That argument ran for centuries, and the reason I'm telling you about it is that it's the same argument two engineers have when one says "we should have a Customer class" and the other says "there is no such thing as a customer, there are just people who bought something, and 'customer' is a label we apply."
+
+Both of them are right, in the sense that both positions have been defended by serious people for eight hundred years. And the choice has consequences in the model. If you're a realist about customers, Customer is a class, and a person either is one or isn't. If you're a nominalist, "customer" is a role that a person plays with respect to a transaction, and the right model has people, transactions, and a role that relates them.
+
+That second modelling choice, incidentally, is the more flexible one, and modern foundational ontologies push hard towards it. It's why upper ontologies like the General Formal Ontology and the Unified Foundational Ontology spend so much effort on roles as a first-class notion — because treating a role as a class produces a specific and very common bug. If Customer is a subclass of Person, then a person who stops buying has to change class, and things in most formal systems cannot change class. Whereas if being a customer is a role a person plays in a relationship, they can start and stop playing it without becoming a different entity.
+
+That is a live, practical, expensive modelling decision, and the medieval debate about universals is exactly where the arguments for both sides were worked out. Nobody tells engineers this, and I think they'd model better if someone did.
+
+One more figure, briefly, because he sits between Wolff and everything we do now.
+
+Gottfried Wilhelm Leibniz, in the seventeenth century, had an idea he called the characteristica universalis — a universal formal language in which every concept could be expressed as a combination of primitive concepts, paired with a calculus ratiocinator, a method of calculation over that language. His claim, and it's one of the great overreaches in intellectual history, was that if you had both, then two philosophers who disagreed could stop arguing, pick up their pens, and say: let us calculate.
+
+That is the dream underneath everything in this series. Formalise the concepts, mechanise the reasoning, and disagreement becomes computation. It's what Wolff was attempting with his deductive method. It's what Cyc attempted with a million hand-written axioms. And it is, in a much more modest and much more honest form, what an OWL reasoner does when it tells you your ontology is inconsistent. Leibniz's dream is alive in the machinery. What died is the belief that it could settle anything beyond the boundaries of a formal model.
+
+So, the claim to keep from this lecture.
+
+Ontology began as the search for the one true account of being, and its whole vocabulary was built for that job. Engineering kept the vocabulary, kept the layered architecture, kept the deductive method, and quietly dropped the claim to uniqueness. Most of the overclaiming you'll encounter in this field is that dropped claim sneaking back in through the word itself.
+
+Next time, the philosopher who found a way to make ontology tractable, by refusing to answer the question at all.

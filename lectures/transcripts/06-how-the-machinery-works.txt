@@ -1,0 +1,113 @@
+Lecture Six. How the Machinery Actually Works.
+
+This is the sixth of ten talks about ontologies. Last time we walked the standards stack and saw that each layer answers a requirement from the 2001 Semantic Web article. Today we open the box. What does a reasoner actually compute, and why does it sometimes behave in ways that seem, on first contact, completely mad?
+
+I'll warn you that this is the most technical lecture in the series. There's no code and nothing to look at, so I'll keep every example small enough to hold in your head while walking.
+
+Start with the mental model, which comes from description logics.
+
+A description logic is a formal language for describing concepts, and the family of them is what OWL is built on. The mental model has three pieces and they're simpler than the name suggests.
+
+Concepts denote sets. When you write a class called Aircraft, you're not naming a thing. You're naming the set of all aircraft. Roles denote sets of ordered pairs. When you write a property called assignedTo, you're naming the set of all pairs where the first element is assigned to the second. And individuals denote specific members. That's it. Sets, pairs, and members.
+
+From those three pieces you build compound descriptions. The set of things that are aircraft AND have more than one aisle. The set of things that are flights AND whose assigned aircraft is a widebody. Description logics are, in essence, a compact notation for describing sets by their properties rather than by listing them, plus a machine that computes the relationships between those sets.
+
+Your ontology then splits into two parts, and this distinction is worth learning because the whole literature uses it.
+
+The TBox is the terminology. General statements about concepts. Every widebody is an aircraft. No aircraft is a crew member. Every flight has exactly one assigned aircraft. These are the rules of your world.
+
+The ABox is the assertions. Facts about specific individuals. This particular aircraft, tail number such-and-such, is a widebody. This flight is assigned to it. These are the contents of your world.
+
+TBox is the schema-ish part, ABox is the data-ish part, and I say "ish" because the analogy leaks in ways we'll get to.
+
+So what does a reasoner compute? Four things, mainly.
+
+Subsumption. Is concept A a subset of concept B, in every possible interpretation that satisfies your axioms? This is the big one, and it's less obvious than it sounds, because the answer is often yes for reasons nobody stated. Suppose you define a LongHaulFlight as a flight with duration over six hours, and separately define a TransatlanticFlight as a flight from Europe to North America, and you've said elsewhere that every Europe-to-North-America route has duration over six hours. The reasoner will tell you that every transatlantic flight is a long-haul flight. Nobody wrote that. It follows.
+
+Classification. Do subsumption for every pair of concepts and you get the complete inferred hierarchy. This is the standard operation you run in an editor: you author a set of definitions in whatever order made sense to you, press the button, and the reasoner rearranges them into the hierarchy your axioms actually imply. When the result surprises you, one of your axioms says something you didn't mean. That's the most valuable error message in the field.
+
+Instance checking. Is this individual a member of that concept? Same logic, one level down.
+
+Consistency. Is there any possible interpretation that satisfies all your axioms at once? If not, your ontology is inconsistent, which means you've described a world that cannot exist, and every conclusion follows from it, so every answer it gives you is worthless. A related check is satisfiability of a single concept: a class that can have no members in any interpretation is unsatisfiable, and it usually means two of your restrictions contradict each other.
+
+Now. The open-world assumption. This is the idea that breaks people, and I want to spend real time on it, because every strange reasoner behaviour you'll ever meet comes from here.
+
+A database operates under the closed-world assumption. If a fact is not in the database, it's false. You ask whether Melissa has a manager, the manager column is null, the answer is no. That's not a limitation, it's the design. A database is a record of what's the case, and it's authoritative over its domain.
+
+OWL operates under the open-world assumption. If a fact is not stated, it's unknown. Not false. Unknown. You ask whether Melissa has a manager, nothing says she does, and the answer is: I don't know, and neither do you.
+
+Here's why. The Semantic Web was built for a web of anonymous publishers. Your graph is a fragment. The fact you're missing might be on a server in Osaka that you'll merge with tomorrow. Under those conditions, concluding "no" from "not stated" is simply invalid, so the logic refuses to do it.
+
+Let me give you the consequence, because it's the one that generates support tickets.
+
+You write an axiom saying a valid order must have at least one line item. You load an order with no line items. You run the reasoner expecting a complaint. The reasoner reports that everything is fine. Why? Because you didn't state a constraint. You stated a fact about the world: orders have line items. The reasoner reads your data, sees an order, and concludes that there exists at least one line item for it which you have not yet told it about. It has done exactly what you asked. It just wasn't what you wanted.
+
+That's why SHACL exists, and it's why the split between inference and validation is not a matter of taste. When you want the machine to find what follows, use a reasoner. When you want the machine to find what's missing, use SHACL or ShEx. Reaching for the wrong one produces either a serene silence where you expected an error, or an error where the system was being perfectly reasonable.
+
+There's a companion assumption that catches people just as often, and it's called the no unique name assumption. In a database, two different primary keys are two different rows. In OWL, two different identifiers might name the same thing. You have a person identified one way in the human resources system and another way in the badge system. Unless somebody asserts they're different, the reasoner treats it as an open question — and if your ontology says a person has exactly one employee number, and those two identifiers have different numbers, the reasoner will conclude they must be different individuals. It can also run the other way. If you say a flight has exactly one assigned aircraft, and your data shows two, a reasoner will not report an error. It will conclude that those two names denote the same aircraft. Which may be true. It may also mean your integration has a bug that you will now never see.
+
+Notice that both assumptions are correct for the environment they were designed for and wrong for the environment most people use them in. The standards were built for an open web of strangers. Most deployments are inside one organisation where the data is authoritative and missing means missing. That mismatch is, I'd argue, the single largest source of frustration with this technology, and it's a mismatch of context rather than a defect.
+
+Now, the trade-off that shapes everything else: expressivity against complexity.
+
+The more you can say in a language, the harder it is to compute with. This isn't an implementation problem you can engineer your way past. It's a mathematical property of the languages. Every operator you add — negation, disjunction, cardinality restrictions, inverse properties, transitive closure — moves the worst-case complexity of reasoning up a rung, and past a certain point the language becomes undecidable, meaning no program can be guaranteed to give you an answer at all.
+
+Description logic research spent two decades charting this landscape precisely: for each combination of operators, exactly how hard is reasoning, and is it decidable? That map is what OWL's profiles are built from.
+
+OWL 2 EL is designed for large biomedical ontologies. It gives up disjunction, negation, and universal restrictions, and in return classification runs in polynomial time. That's why a reasoner like ELK can classify an ontology with hundreds of thousands of classes in seconds. The Gene Ontology and its relatives live here, and the restrictions turn out not to hurt, because biology mostly wants "this is a kind of that, and it participates in this process."
+
+OWL 2 QL is designed so that queries against an ontology can be rewritten into ordinary database queries and run against your existing relational store. You keep your data where it is, and the ontology becomes a query rewriting layer.
+
+OWL 2 RL is designed to be implementable as forward-chaining rules over RDF, which means you can materialise all the consequences in a preprocessing pass and then query the result with no reasoner in the loop. A library called OWL-RL does exactly that. The caveat in the specification is worth knowing: rule-based RL reasoning can be sound but incomplete outside the structural conditions the spec sets out, meaning it won't tell you anything false, but it may not tell you everything true.
+
+And then there's full OWL 2 DL, with the expressive power and the worst-case complexity to match. Reasoners here — HermiT, which implements the direct semantics with a technique called hypertableau, and Openllet, which offers broad OWL 2 DL services — do genuinely impressive work, and they can also fall off a cliff. The documented triggers are worth memorising, because they're predictable: large disjunctions, high cardinality restrictions, deep existential expansion, and many assertions that individuals are different from one another. If your ontology classifies in two seconds and then, after one new axiom, doesn't finish overnight, look at that list first.
+
+So how do you choose? Not by expressive power. By workload. What questions do you need answered, how big is the ontology, how big is the instance data, and how often does it change? A biomedical terminology with half a million classes and no instance data wants EL. A model sitting over an existing warehouse wants QL. A pipeline that materialises nightly wants RL. Full DL is for when you genuinely need the expressive power and can pay for it, and it's worth confirming that you do, because a surprising number of ontologies that use DL features never ask a question that depends on them.
+
+One more thing before I close, about what reasoners are actually good for in practice, because there's a gap between the textbook pitch and the working reality.
+
+The textbook pitch is that the reasoner derives valuable new knowledge at query time. That happens, and it's real, particularly in classification-heavy domains.
+
+The working reality, in my reading of how successful projects use this, is that the reasoner is most valuable as a contradiction detector during authoring. You have a hundred people editing a large ontology over ten years. Somebody adds an axiom in one branch that contradicts an axiom added six years ago in another. No human will catch that. The reasoner catches it every time, in the build. Treat classification as a continuous integration check on meaning, and the technology earns its keep even if you never run a single inference in production.
+
+Let me give you two more things that come up the moment you use a reasoner in anger.
+
+The first is explanation, and it's the feature that turns a reasoner from a curiosity into a tool you can work with.
+
+When a reasoner tells you your ontology is inconsistent, that's useless on its own. Your ontology has four thousand axioms. Which ones are fighting? So reasoners and editors implement justification: given an inferred statement, produce a minimal set of axioms that entails it. Minimal meaning that if you removed any one of them, the conclusion would no longer follow.
+
+That's the debugger. You get told that your class Widebody has been inferred to be equivalent to nothing — unsatisfiable, no possible members — and you ask for the justification, and you get back three axioms. One says every widebody has more than one aisle. One says every aircraft in the regional fleet has exactly one aisle. And one, added by a colleague two years ago, says every widebody is in the regional fleet. Nobody could have found that by reading. The machine finds it in a second and hands you the three lines.
+
+I'd argue that justification, rather than inference, is the feature that pays for the whole apparatus in a large collaborative project. It's the thing that makes an ontology maintainable by more than one person over more than one year.
+
+The second thing is the choice between materialising and querying, because it's the main architectural decision you'll actually make.
+
+Materialising means: run the reasoner, compute all the entailed statements, write them into the store alongside the asserted ones, and then query the result with an ordinary query engine that knows nothing about logic. That's what a forward-chaining OWL RL implementation does. The advantages are large. Queries are fast, because there's no reasoning at query time. Your query layer is simple. Everything downstream is just data.
+
+The costs are equally real. The materialised graph can be much bigger than the source — a transitive relation over a deep hierarchy explodes combinatorially. Updates are painful, because adding one fact can entail many others and retracting one fact means working out which conclusions depended on it, which is a genuinely hard problem called truth maintenance. And you're limited to the profile your materialiser supports.
+
+Querying with a reasoner in the loop means the entailments are computed when asked. Nothing is stored twice, updates are trivially correct, and you get the full expressive power. And your query latency now depends on a reasoning problem whose worst case is bad.
+
+In practice most large deployments materialise a tractable profile nightly and accept the limits, because predictable query performance beats expressive power in production. That is a very common shape for this technology to take in the wild, and it's worth knowing that the theoretically interesting part often gets run in a batch job at two in the morning.
+
+Now, one specific trap, since we've been talking about the layers all series.
+
+OWL has a feature called punning, which lets the same name be used as both a class and an individual. You want to say that Eagle is a class of birds, and separately that Eagle is an instance of Species, because your model has a class called Species and you want to count species. In OWL 2 DL, punning lets you do that: the same name is used in two ways, and the reasoner treats them as two entirely separate entities that happen to share a spelling.
+
+The trap is that people expect them to be connected, and they're not. Nothing you assert about Eagle-the-individual affects Eagle-the-class. If you assert that Eagle-the-species is endangered, you have not said anything at all about the birds. The name is a coincidence as far as the logic is concerned.
+
+That confusion — between a class and the class considered as a thing — has a proper name in the literature, and it's the class-instance mismatch, and it's one of the most common modelling errors in the field. If you find yourself wanting to say something about a class rather than about its members, stop and check which you mean. Usually the right answer is to introduce a separate individual that represents the class, and relate them explicitly, rather than relying on a pun.
+
+Let me close the technical part with something practical about performance, because there's a folk belief that reasoners are slow and it's more specific than that.
+
+Reasoners are not uniformly slow. They're fast on most real ontologies and catastrophic on a small number of specific patterns, and the patterns are known. Large disjunctions, meaning long lists of alternatives, force the reasoner to explore branches. High cardinality restrictions — this thing has at least fifty of those — force it to construct fifty distinct individuals to check. Deep chains of existential restrictions cause the model it's building to grow without an obvious bound. And many assertions that individuals are pairwise different produce a quadratic pile of work.
+
+So the diagnostic when a reasoner stalls is not "reasoners are slow." It's: which of those four did I just add? And if it's genuinely needed, the follow-up question is whether you need it in the same ontology as everything else, or whether that part can be a separate module that's reasoned over on its own.
+
+Which brings me to modularity, which is the answer to most performance problems and most comprehension problems at once. A large ontology is not one file. It's a set of modules with explicit imports, each of which can be classified independently, each of which has an owner. ROBOT can extract a module — give it a set of terms you care about and it pulls out the logically relevant subset, so a downstream team imports two hundred terms instead of two hundred thousand. That single capability is what makes it possible for a domain ontology to build on a large upper ontology without inheriting its whole reasoning cost.
+
+So, the claim to keep from this lecture.
+
+Concepts are sets, roles are pairs, the TBox states rules and the ABox states facts, and a reasoner computes what your axioms force to be true in every world that satisfies them. The one idea that breaks intuition is the open-world assumption: unstated means unknown, never false. That is why a reasoner will not validate your data, and why SHACL exists. And expressivity is bought with computation, which is what the OWL profiles are selling.
+
+Next time, we put all of this into practice, and find out why an ontology project is really a governance project with a file attached.

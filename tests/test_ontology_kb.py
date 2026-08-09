@@ -31,7 +31,7 @@ class ActualKnowledgeBaseTests(unittest.TestCase):
         cls.search_index = kb.SearchIndex(cls.entries)
 
     def test_actual_index_has_fixed_six_field_schema(self) -> None:
-        self.assertEqual(168, len(self.entries))
+        self.assertEqual(181, len(self.entries))
         for entry in self.entries:
             self.assertEqual(set(kb.FIELD_NAMES), set(entry["fields"]))
 
@@ -113,8 +113,8 @@ class ActualKnowledgeBaseTests(unittest.TestCase):
     def test_actual_status_is_healthy_and_reconciled(self) -> None:
         payload = kb.status_payload(ROOT, "test", self.entries, self.manifest)
         self.assertTrue(payload["ok"])
-        self.assertEqual(168, payload["indexed_notes"])
-        self.assertEqual({"noted": 168, "skipped": 20}, payload["manifest_status"])
+        self.assertEqual(181, payload["indexed_notes"])
+        self.assertEqual({"noted": 181, "skipped": 20}, payload["manifest_status"])
         self.assertEqual([], payload["missing_notes"])
         self.assertEqual([], payload["unindexed_noted_slugs"])
 
@@ -202,7 +202,7 @@ class CommandLineContractTests(unittest.TestCase):
         completed = self.run_cli("status")
         self.assertEqual(0, completed.returncode, completed.stderr)
         self.assertIn("Ontology KB: healthy", completed.stdout)
-        self.assertIn("Indexed notes: 168", completed.stdout)
+        self.assertIn("Indexed notes: 181", completed.stdout)
 
     def test_sources_command_reports_skipped_entry(self) -> None:
         completed = self.run_cli("sources", "--json", "wordnet")

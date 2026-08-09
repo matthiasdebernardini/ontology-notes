@@ -1,0 +1,101 @@
+Lecture Five. The Semantic Web: A Vision and the Stack It Built.
+
+This is the fifth of ten talks about ontologies. Last time we saw the engineering sense of the word emerge from a military-funded programme about reuse, and we met Cyc, the field's most expensive experiment. Today, the moment the discipline was handed the whole web, and the standards that came out of it. By the end you should understand why the technology has the shape it has, because almost every odd feature is an answer to a requirement set out in one magazine article.
+
+The article appeared in Scientific American in May 2001. The authors were Tim Berners-Lee, who invented the World Wide Web, along with James Hendler and Ora Lassila. It's called "The Semantic Web," and it opens with a scenario that I'm going to read you a piece of, because everything follows from it.
+
+The entertainment system is playing the Beatles when the phone rings. Pete answers, and his phone turns the sound down by sending a message to all the local devices with a volume control. His sister Lucy is calling from the doctor's office. Their mother needs to see a specialist and then have a series of physical therapy sessions, twice a week or so. Lucy says she'll have her agent set up the appointments. Pete agrees to share the driving. At the doctor's office, Lucy instructs her Semantic Web agent through her handheld browser. The agent retrieves information about the prescribed treatment from the doctor's agent, looks up providers within twenty miles of home with a rating of excellent or very good on trusted rating services, and starts matching available appointment times — supplied by the agents of individual providers through their own websites — against Pete's and Lucy's schedules.
+
+Now, hold that scenario in your head, because I want to inventory what it demands. It is not a vague aspiration. It's a specification, and you can read the requirements off it directly.
+
+First, Lucy's agent talks to the doctor's system, to several clinics, to rating services, and to two personal calendars. Nobody built an integration between any of them. So requirement one: data from independent sources must combine without anyone having agreed in advance to combine it.
+
+Second, the agent has to know that the doctor's "physical therapy" and the clinic's "physiotherapy" are the same treatment. Requirement two: shared meaning across independent vocabularies.
+
+Third, the agent has to know that a provider rated "excellent" satisfies a request for "excellent or very good," which nobody stated — it has to work it out. Requirement three: derive facts that were never written down.
+
+Fourth, and I want to stress this, the appointment times are supplied by the agents of individual providers through their own websites. Not through a booking platform. Not through an aggregator. Requirement four: decentralisation. Any physiotherapist can hang out a shingle on the web and be found, without asking permission from a platform.
+
+Four requirements. Now watch the standards fall out of them one by one.
+
+Requirement one is combining data from strangers. The answer is RDF, the Resource Description Framework. RDF says: express everything as three-part statements. Subject, predicate, object. Vincent D'Onofrio starred in Law and Order. Law and Order is a television show. That's it. That's the data model.
+
+Why triples rather than tables? Because triples merge and tables don't. If I hand you two relational databases about the same domain, merging them is a project — you reconcile schemas, resolve key collisions, decide what to do about columns that exist on one side only. If I hand you two sets of triples, you concatenate the files. Union of two graphs is a graph. There is no schema negotiation because there's no schema to negotiate. That's the whole reason for the design, and if you've ever wondered why anyone would shred perfectly good tables into three-column statements, that's the answer: it's the only shape that merges without coordination.
+
+RDF also solves the identity half of requirement two, with URIs. A URI, a Uniform Resource Identifier, is a globally unique name. The insight is that if two publishers who've never met both use the same URI for physical therapy, their statements automatically join up when the graphs merge. Identity is delegated to a global namespace nobody owns, which is the same trick that made the web work for documents.
+
+Now I should clear something up that confuses people for years. RDF is an abstract graph model. It's not a file format. The file formats are separate, and there are several: RDF slash XML, which came first and which almost everyone regrets; Turtle, which is compact and readable and what you'd write by hand; JSON-LD, which lets you carry linked data in ordinary JSON so that a web developer never has to think about any of this; N-Triples for streaming; TriG and N-Quads when you need to track which graph a statement came from. Those are spellings of the same thing. Arguing about them is like arguing about file encodings. The graph is the model.
+
+Requirement two, shared meaning, needs more than identifiers. It needs a way to say what a term means. That gives us two layers, and the fact that there are two is a deliberate design decision.
+
+The first is RDFS, RDF Schema, and it's deliberately tiny. Classes. Instances. Subclass hierarchies. Subproperty hierarchies. Domains and ranges for properties. Labels and comments for humans. That's nearly the whole language, and it's enough for an enormous amount of practical work. If your ontology is a controlled vocabulary with a hierarchy, RDFS does the job and you should stop there.
+
+The second is OWL, the Web Ontology Language, and it's where the ambition lives. OWL gives you cardinality — this flight has exactly one assigned aircraft. Disjointness — no aircraft is a crew member. Restrictions — a widebody is an aircraft with more than one aisle. Property chains — the manager of my manager is my second-line manager. Keys, inverses, transitivity, symmetry. OWL 2 also has profiles, which are deliberately restricted sublanguages: EL for classifying enormous biomedical ontologies quickly, QL for querying over relational data, RL for rule-based processing of RDF graphs. Each profile gives up expressive power to buy a computational guarantee, and lecture six explains that trade properly.
+
+Requirement three, deriving what was never stated, is what OWL is for and what a reasoner does. If the ontology says every physiotherapist is a healthcare provider, and the data says Anna is a physiotherapist, then Anna is a healthcare provider, and nobody had to write that down. Multiply that across a large ontology and the reasoner is doing real work, finding consequences of your axioms that no human traced.
+
+Then there's the piece nobody planned for in 2001, which is querying. It turns out that once you have a large graph, most of what people want to do with it is ask questions, not derive theorems. So SPARQL arrived — a query language for RDF, with triple patterns, optional matches, alternatives, property paths for walking arbitrary-length chains, aggregation, and four result forms: SELECT for bindings, CONSTRUCT to build a new graph, ASK for yes or no, DESCRIBE for whatever the server thinks is relevant. SPARQL reached version 1.1 and became, in practice, the most used part of the entire stack. There's also a variant called SPARQL-DL that gives a substantial subset of SPARQL a semantics defined in terms of OWL entailment, so your queries see inferred facts and not just asserted ones.
+
+And there's one more layer that arrived late and mattered more than its designers expected, which is validation. SHACL, the Shapes Constraint Language, and its cousin ShEx, Shape Expressions. These let you say what shape your data must have and get a machine-readable report of what failed.
+
+Now, why is that a separate technology? Why can't OWL do it? Because OWL and SHACL answer opposite questions, and this is one of the most useful distinctions in the whole field.
+
+OWL says: here are my premises, tell me what follows. If the ontology says every order has a customer, and I show you an order with no customer, OWL concludes that there exists a customer I haven't told you about yet. It does not complain. It infers.
+
+SHACL says: here are my expectations, tell me what's broken. Same situation, and SHACL reports a violation: this order node has zero values for the customer property, and the shape requires at least one.
+
+Both behaviours are correct for their purpose. OWL was built for an open web where any publisher might hold the missing fact. SHACL was built for a pipeline where missing data is a bug. Most production systems need both, and the number of teams who've discovered this the hard way, after asking a reasoner to validate their data and receiving a serene report that everything is fine, is large.
+
+So: RDF for merging, URIs for identity, RDFS and OWL for meaning, reasoners for inference, SPARQL for questions, SHACL for validation. That's the stack, and every piece of it traces to a requirement in that Scientific American scenario.
+
+Now let me tell you what happened to the vision, briefly, because lecture eight goes into the criticism properly.
+
+The programme had roughly four phases, and the standard account puts the golden age between 2001 and 2005, when the W3C issued the foundational recommendations. RDF became a recommendation in 2004, though it had been circulating since 1997 in draft — and it's a nice historical detail that RDF grew partly out of work by Ramanathan Guha, an Apple engineer, on a metadata system for files. Berners-Lee started calling the programme Web 3.0. A venture capitalist told the New York Times in 2006 that it would be as obvious as the web is to us now.
+
+It did not arrive. We have agents like Siri, and they work because engineers at Apple wired them, by hand, to a specific list of services. Your physiotherapy clinic cannot advertise itself to Siri from its own website. It has to enter its details into Google or Yelp, because those are the only services the agent knows and the only ones a human will check.
+
+Look back at requirement four. Decentralisation. That's the requirement that died. The other three were satisfied, technically, by standards that work. The fourth was defeated by economics, and it was the point of the whole exercise.
+
+But the machinery survived, and this is the part that gets left out of the obituaries. It survived wherever somebody has a genuine reason to curate. The Gene Ontology is load-bearing infrastructure in biology. CIDOC CRM mediates between museum catalogues that will never be unified. The Financial Industry Business Ontology gives banks shared meaning across systems. Wikidata is a live, community-curated graph with a public query endpoint serving billions of statements. Schema dot org is on a large fraction of the web, because search engines gave publishers a direct commercial reason to add it and kept the vocabulary shallow enough to bother with.
+
+There's a pattern in that list, and it's the most useful diagnostic this series has to offer. Every survivor has a bounded domain, an identifiable community, a funder, and somebody whose job is curation. The open web has none of those. When you next evaluate an ontology proposal, ask which of those two situations it resembles. That question predicts outcomes better than any technical assessment of the model.
+
+I want to fill in one piece of history I glossed, because it explains why OWL looks the way it does, and it's a good story about standards.
+
+Before OWL there were two competing proposals, developed on opposite sides of the Atlantic. In the United States, DARPA funded a language called DAML, the DARPA Agent Markup Language. In Europe, a project produced OIL, the Ontology Inference Layer. Both were trying to put a description logic on top of the web's markup, and both had the same customer in mind.
+
+They merged, into a language called DAML plus OIL, and that merged language went to the W3C and became OWL. Ian Horrocks, one of the people in the room, wrote up the design process afterwards, and the accounts of it are unusually candid about the trade-offs.
+
+The central tension was this. The description logic community wanted a language where reasoning is decidable, because that's the entire point of their thirty years of work. The web community wanted a language that was a straightforward layer on RDF, because that's how the web is built and anything else wouldn't get adopted. Those two goals conflict, because RDF lets you say things that push a description logic straight past the decidability boundary. In RDF, a class can be an instance of another class. You can make statements about statements. RDF has no problem with any of that. A decidable description logic does.
+
+The resolution is why OWL has two semantics, and this genuinely confuses people, so here it is plainly. OWL 2 DL has what's called the direct semantics: you accept some restrictions on what you can write, and in exchange you get decidable reasoning and can use reasoners like HermiT. OWL 2 Full — or in the formal wording, the RDF-based semantics — applies to any OWL-as-RDF graph, imposes no restrictions, and gives up the decidability guarantee.
+
+So OWL is not one language with a quirk. It's a negotiated settlement between two research communities that wanted incompatible things, and the seam is visible in the specification to this day. That's worth knowing, because when you hit a case where a perfectly reasonable-looking piece of RDF makes your reasoner refuse to run, you're standing on that seam and it's not your fault.
+
+There's also a piece of the programme that I think succeeded more quietly than the rest, and it's the linked data rules.
+
+Around 2006, Berners-Lee wrote down four rules, and they're small enough to say in twenty seconds. Use URIs as names for things. Use HTTP URIs so people can look them up. When someone looks one up, provide useful information using the standards. And include links to other URIs, so they can discover more things.
+
+That's it. No reasoning, no ontology language, no agents. Just: name things with web addresses, make the addresses work, and link out. And that minimal version got real adoption in a way the full stack didn't, because the cost of compliance is nearly zero and the benefit is immediate. It's the reason there's a linked open data cloud with hundreds of interlinked datasets, and the reason Wikidata's identifiers turn up as the join key across a remarkable range of systems.
+
+If you take one design lesson from the whole Semantic Web episode, it might be that one. The minimal, cheap, immediately useful layer got adopted. The maximal, expensive, eventually-useful layer did not. And when the W3C sequenced its work, it built the maximal layer first.
+
+Let me also give schema dot org its own moment, because it's the largest deployment of any of this and it's usually treated as a footnote.
+
+In 2011 Google, Bing, Yahoo, and later Yandex jointly published a vocabulary for marking up web pages — types for people, places, events, products, recipes, reviews, organisations, and so on. Publishers add the markup, search engines read it, and the page gets a richer result. Recipes show cooking times. Events show dates. Products show prices and ratings.
+
+Now look at why it worked where the rest of the programme didn't, because it's a clean natural experiment. It had a direct, visible, commercial reward for the publisher, delivered immediately. It was backed by the parties that controlled the only consumer anyone cared about. Its vocabulary is deliberately shallow, with loose typing and permissive semantics, so you can't get it very wrong. And it's expressible in JSON-LD, which means a web developer adds a script tag and never learns what a triple is.
+
+Every one of those is a violation of what the formal tradition would consider good practice. Shallow modelling. Permissive semantics. No reasoner. And it's on hundreds of millions of pages, which is more deployment than the rest of the stack combined.
+
+I don't offer that as a knock-down argument. Schema dot org can't do what the Gene Ontology does, and nobody would try to run a drug interaction check on it. But the contrast is the useful thing: depth of semantics and breadth of adoption trade against each other, hard, and a project that wants both usually gets neither.
+
+One last piece of the stack, briefly, because it comes up in practice and I don't want you blindsided.
+
+Rules. Alongside OWL there's a proposal called SWRL, the Semantic Web Rule Language, which combines Horn-like rules with OWL, letting you write things a description logic can't express — the classic example being that if a person has a parent and that parent has a brother, then the person has an uncle. Description logics genuinely struggle with that shape, because it involves composing relations in a way that breaks decidability if you allow it generally. SWRL lets you write the rule and warns you about what you've given up. There's also Notation3, which extends the compact RDF syntax with rules, and there's SPIN, which uses SPARQL itself as a rule language. If you find yourself fighting OWL to express something that's obviously a rule, that's usually because it is one, and there's a whole separate family of tools for it.
+
+So, the claim to keep.
+
+Every awkward feature of the Semantic Web standards is an answer to a requirement in the 2001 article. Triples because data from strangers must merge. Global identifiers because merging needs shared identity. OWL because agents must infer what nobody stated. SHACL because inference is not validation. Three of the four requirements were met. The fourth, decentralisation, was the point, and it lost to economics.
+
+Next time, we open the box and find out how the reasoning actually works, and meet the one assumption that breaks everybody's intuition the first time.
