@@ -437,3 +437,34 @@ from a note's own text, or be cut. Spans below are from `notes/`.
 
 Nine kept as written, sixteen rewritten from a note's own text, one cut and replaced
 (**Justification** → **Explanation**). The rewritten text is in `scripts/build_site.py`.
+
+---
+
+## Task 5 additions — where the grounding lives
+
+The depth pass added roughly eight thousand two hundred words across nine transcripts.
+Those additions are not re-tabulated here, for a reason worth stating: this map's unit is
+the (note, cited URL) pair, and it exists because a note's claims must trace out of the
+repository to a capture. The Task 5 additions trace *into* the repository — each one to a
+span in a note this map, or the original harvest, already grounded. Duplicating them here
+would record the same evidence twice under a weaker key.
+
+The per-passage trace is in `CHANGES.md` under "Task 5 — Depth", and the quoted inventories
+the pass drew from are the "Depth still available" sections of `audit-04.md` through
+`audit-08.md` and `audit-10.md`. Each inventory item carries the span it rests on.
+
+Two rows in this map did change status through the depth pass, and both are recorded here
+because they are grounding corrections rather than additions:
+
+| Claim | Where it was | Verdict | Supporting span |
+| --- | --- | --- | --- |
+| "The objects, concepts, and other entities that are presumed to exist in some area of interest" is Genesereth and Nilsson's wording | `lectures/transcripts/01-three-things-people-mean.txt` | **Corrected.** The attribution was wrong; the wording is Gruber's later restatement. Lecture one now says so, and lecture four states both wordings. | `notes/gruber-ontology-definition.md`: "That wording is Gruber's own 2009 restatement; Genesereth and Nilsson's original says 'assumed to exist.'" |
+| The lecture-nine head-to-head between Palantir's Ontology and the W3C stack | `lectures/transcripts/09-palantir-operational-layer.txt` | **Qualified.** The comparison was sound but ran without saying that Palantir is not a party to it. It now carries the note's own disclaimer, plus the single acknowledged debt. | `notes/palantir-ontology.md`: "Palantir's documentation never mentions OWL, RDF, the W3C, reasoners, or world assumptions, so nothing below is a Palantir claim"; and the exception, "data types in Foundry are inspired by similar concepts in RDF, OWL and XSD." |
+
+Notes that were listed sources but contributed nothing to their lecture before this pass,
+and now do — a coverage gap this map did not track and should have:
+
+- `notes/dl-query-class-expression.md` — listed for lecture six, used zero times. Now carries
+  a beat on interrogating a classified ontology and two failure modes.
+- `notes/shacl-shapes-constraint-language.md` — listed for lecture nine, used zero times in
+  that file. Now carries the SHACL objection to the action-model argument and its answer.

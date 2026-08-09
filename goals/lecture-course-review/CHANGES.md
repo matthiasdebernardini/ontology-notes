@@ -379,3 +379,118 @@ counts in `tests/` did not need updating for this task.
 - Each brief ends with a **"Depth still available"** section listing grounded material
   the lecture does not yet use. That is the input to Task 5, and it is evidence that the
   cuts were not the notes running dry.
+
+---
+
+## Task 5 — Depth
+
+Done in a separate session after the audit pass. The audit cut ungrounded material;
+this task spends what the notes still hold. The input was the "Depth still available"
+section each per-file brief ends with — a quoted inventory of grounded material the
+transcript did not use — plus, for the four lectures with no brief, an inventory built
+from scratch against the notes `COURSE-PLAN.md` lists.
+
+The rule was unchanged: every added proposition traces to a span in a note listed for
+that lecture. Nothing was added from general knowledge, and nothing was added because a
+file looked short.
+
+### What shipped, by file
+
+| Lecture | Before | After | Change | Principal sources drawn on |
+| --- | ---: | ---: | ---: | --- |
+| 01 Three things people mean | 2,699 | 3,143 | +444 | `skos-simple-knowledge-organization-system`, `scigraph`, `SYNTHESIS.md` |
+| 02 Aristotle to Wolff | 2,815 | 2,815 | 0 | unchanged — see below |
+| 03 Quine | 2,526 | 3,091 | +565 | `ontology-matching`, `alignment-api` |
+| 04 Cyc | 2,192 | 2,780 | +588 | `description-logics-dls`, `gruber-ontology-definition`, `cyc-lenat-1995` |
+| 05 Semantic Web | 2,669 | 3,913 | +1,244 | `sparql-1-1`, `json-ld`, `rdf-schema-rdfs-1-1`, `shacl-...`, `semantic-web-2001-vision` |
+| 06 Machinery | 2,735 | 4,055 | +1,320 | `dl-query-class-expression`, `openllet`, `hermit`, `elk`, `owl-2-...` |
+| 07 Building one | 2,941 | 3,986 | +1,045 | `gufo`, `common-core-ontologies-cco`, `ontologydesignpatterns-org`, `elot`, `logmap` |
+| 08 Criticisms | 3,377 | 4,416 | +1,039 | `shirky-ontology-is-overrated`, `bowker-star-sorting-things-out`, `doctorow-metacrap`, `semantic-web-retrospective` |
+| 09 Palantir | 3,103 | 4,140 | +1,037 | `palantir-ontology`, `shacl-shapes-constraint-language`, `owl-2-...` |
+| 10 Politics and next | 2,812 | 3,751 | +939 | `palantir-ontology-critique`, `bowker-star-...`, `llm-ontology-debate`, `ontolearner`, `elot` |
+| **Total** | **27,869** | **36,090** | **+8,221** | |
+
+Course duration: two hours forty at one hundred and forty-five words per minute before,
+four hours nine after. Under the five-hour soft ceiling.
+
+### The largest single additions
+
+- **Lecture six** gained the most because one of its listed sources,
+  `notes/dl-query-class-expression.md`, was used nowhere in the course. It now supports a
+  whole beat on interrogating a classified ontology and two sourced failure modes for the
+  "why is nothing coming back" case. It also gained relation checking, which
+  `description-logics-dls.md` names as a fourth inference task and the lecture omitted;
+  a sourced unintended-entailment example from `openllet.md` replacing an illustrative
+  one; and a short honest beat on version compatibility as the day-to-day cost of the
+  stack, from `elk`, `hermit` and `openllet`.
+- **Lecture nine** gained the action and function model the goal specifically flagged as
+  under-served: action types as rules, parameters and submission criteria; functions as
+  business logic of arbitrary complexity under a fixed permissioned surface; Palantir's
+  own anti-retrieval-augmented-generation positioning and its "tool factory" framing. It
+  also gained the caveat that Palantir's documentation never mentions OWL, RDF, the W3C,
+  reasoners or world assumptions, so the head-to-head comparison is the lecturer's and not
+  Palantir's — the lecture previously ran that comparison with no such disclaimer.
+  `notes/shacl-shapes-constraint-language.md` was a listed source used zero times; it now
+  carries the SHACL objection and the answer to it.
+- **Lecture eight** gained Shirky's positive programme, which the lecture omitted
+  entirely: links and tags, the ISBN and the web address as unique labels that let
+  libraries merge without merging their categorisation schemes, and tags as value
+  produced by forgoing classification. Also Helmreich's apartheid reclassification case in
+  full rather than gestured at, the voodoo-categorisation argument as the bridge into
+  Bowker and Star, Doctorow's language-model payoff, and the Schema.org sequencing lesson.
+- **Lecture five** gained the incentive objection from `semantic-web-2001-vision.md` —
+  the hinge of lecture eight, deliberately stated here and deferred there — plus SPARQL's
+  security surface, the two RDFS traps, and the JSON-LD mechanism and adoption list.
+
+### Lecture two, unchanged
+
+Lecture two was re-expanded in the previous session from `ontology-word-history.md`,
+`bfo-basic-formal-ontology.md` and `common-core-ontologies-cco.md`, and that work is the
+first commit of this session. Its notes are the thinnest in the course: the word-history
+note is the only substantial one, and the two upper-ontology notes serve lecture seven's
+purposes, not lecture two's. Nothing further was added, because nothing further was
+there. Leaving it at nineteen minutes is the correct outcome, not a gap.
+
+### One grounding error found and fixed
+
+Lecture one attributed "the objects, concepts, and other entities that are presumed to
+exist in some area of interest" to Genesereth and Nilsson. `notes/gruber-ontology-definition.md`
+says otherwise: "That wording is Gruber's own 2009 restatement; Genesereth and Nilsson's
+original says 'assumed to exist.'" Lecture one now says the quoted wording is Gruber's
+restatement, and lecture four's new passage on the two wordings refers back to that
+correctly rather than correcting a claim the file no longer makes.
+
+### Material deliberately left unused
+
+Not everything in the depth inventories was spendable. The recurring reasons:
+
+- **Unspeakable as narration.** API identifiers, `AutoRetrieverLearner(batch_size=...)`,
+  Hit@K and MRR, format lists, media types. The narration bans code, and spelling them
+  out buys a listener nothing.
+- **Would need an expansion no note supplies.** ISO 23726-3, ODPA, NeOn, CURIE,
+  Notation3. Expanding an acronym from memory is the exact failure this review exists to
+  prevent, so those items were dropped rather than glossed.
+- **Belongs to another lecture.** TBox and ABox, the open-world assumption and the four
+  inference tasks were left out of lecture four because lecture six's claim to retain is
+  built on them. The Genesereth and Nilsson conceptualization material stayed in lecture
+  one. Alignment tooling stayed in lecture seven, not lecture three.
+- **Would re-create a seam the audit cut.** The Aaron Swartz block and the
+  agent-layer-centralisation point were both left out of lecture eight: the first is
+  lecture five's subject, the second is a fourth kind of failure landing immediately
+  before a close whose claim is "three critiques, three layers."
+- **Tool trivia.** WIDOCO's local-filesystem section trap, ROBOT's PowerShell
+  byte-order-mark warning, LogMap's format list, OBO Foundry's catalog export formats.
+  Grounded, but no argumentative payload.
+
+### Narration constraints re-verified after the pass
+
+A scan across all ten files confirms: zero digits, zero markdown, zero headings, zero
+bullets, zero code, zero URLs, exactly one closing claim per file, and every file still
+opening with `Lecture <Number>.`. Acronyms introduced by the new material are expanded on
+first use in their own file — ISBN in lecture eight, CRUD in lecture one, the Resource
+Description Framework and the Shapes Constraint Language in lecture nine, retrieval-augmented
+generation written out rather than initialised in lectures nine and ten.
+
+`lectures/COURSE-PLAN.md` was updated in the same task: the 2,700 to 3,100 word band is
+gone, replaced by a table of shipped counts and the true total duration. The plan and the
+transcripts now agree.
